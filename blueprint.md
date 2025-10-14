@@ -17,17 +17,53 @@ This document outlines the plan for creating an admin panel for the website. The
     *   Add, edit, and delete library books using a `books.json` file for data persistence.
     *   Fields: Title, Author, Availability (Hardcopy and/or Softcopy), PDF Link.
     *   Public-facing library displays availability with a "View PDF" button for softcopies and text indicating hardcopy availability.
+*   **Notice and News Management:**
+    *   A public page at `/notices` to display notices and news.
+    *   Admin panel integration to add, edit, and delete notices.
+    *   Data is stored in a `notices.json` file.
 *   **Contact Page:** A new page at `/contact` with a form for users to send messages.
 *   **Admin Layout:** A consistent layout with a sidebar for navigation and a logout button.
+*   **Newsletter Subscription:** A newsletter subscription form on the homepage to collect user emails.
+*   **CTA Button:** The main call-to-action button on the homepage is "Join Us" and links to a placeholder URL.
 
-## Current Request: Improve Gallery Image Management
+## Current Request: Add Notice and News Feature
+
+*   **Goal:** Add a "Notice and News" page and admin panel functionality.
+*   **Steps:**
+    1.  Create `notices.json` to store notices. - **Done**
+    2.  Update `app/lib/actions.js` with notice management functions. - **Done**
+    3.  Create an admin page at `app/admin/notices` to manage notices. - **Done**
+    4.  Create a `NoticeManager` component for the admin UI. - **Done**
+    5.  Add a "Notice and News" link to the admin sidebar. - **Done**
+    6.  Create a public page at `/notices` to display notices. - **Done**
+    7.  Add a "Notice and News" link to the main navbar. - **Done**
+    8.  Update the `blueprint.md` to reflect these changes. - **Done**
+
+## Previous Plans
+
+### Change CTA Button
+
+*   **Goal:** Change the main call-to-action button on the homepage.
+*   **Steps:**
+    1.  Update the button text to "Join Us". - **Done**
+    2.  Set the button link to a placeholder (`#`). - **Done**
+    3.  Update the `blueprint.md` to reflect these changes. - **Done**
+
+### Add Newsletter Subscription
+
+*   **Goal:** Add a newsletter subscription form to the homepage.
+*   **Steps:**
+    1.  Create a `subscribers.json` file to store subscriber emails. - **Done**
+    2.  Create a server action to add subscribers to the `subscribers.json` file. - **Done**
+    3.  Create a `Newsletter` component with an email input and subscribe button. - **Done**
+    4.  Add the `Newsletter` component to the homepage. - **Done**
+    5.  Update the `blueprint.md` to reflect these changes. - **Done**
+
+### Improve Gallery Image Management
 
 *   **Goal:** Improve the user interface for managing gallery images in the admin panel.
 *   **Steps:**
     1.  **Update Admin Gallery Page:** Replaced the comma-separated text field with an interactive interface that allows admins to dynamically add, edit, and delete individual image links. - **Done**
-    2.  Update the `blueprint.md` to reflect these changes. - **Done**
-
-## Previous Plans
 
 ### Use Image Links in Gallery
 

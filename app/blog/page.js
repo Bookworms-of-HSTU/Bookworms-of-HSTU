@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './page.module.css';
 import { posts } from '../../data/posts';
 
@@ -9,7 +10,7 @@ export default function Blog() {
       <div className={styles.grid}>
         {posts.map((post) => (
           <Link href={`/blog/${post.slug}`} key={post.id} className={styles.card}>
-            <img src={post.image} alt={post.title} className={styles.cardImage} />
+            <Image src={post.image} alt={post.title} className={styles.cardImage} width={400} height={200} />
             <div className={styles.cardContent}>
               <h2 className={styles.cardTitle}>{post.title}</h2>
               <p className={styles.cardExcerpt}>{post.excerpt}</p>

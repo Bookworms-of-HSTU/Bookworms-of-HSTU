@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styles from './page.module.css';
 
 const committees = {
@@ -37,7 +38,7 @@ export default function About() {
           <div className={styles.teamGrid}>
             {members.map(member => (
               <div key={member.id} className={styles.teamMember}>
-                <img src={member.photo} alt={member.name} className={styles.teamMemberImage} />
+                <Image src={member.photo} alt={member.name} className={styles.teamMemberImage} width={200} height={200} />
                 <h3 className={styles.teamMemberName}>{member.name}</h3>
                 <p className={styles.teamMemberRole}>{member.position}</p>
               </div>

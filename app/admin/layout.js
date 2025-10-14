@@ -43,6 +43,11 @@ export default function AdminLayout({ children }) {
               Library
             </Link>
           </li>
+          <li className={styles.navItem}>
+            <Link href="/admin/notices" className={styles.navLink}>
+              Notice and News
+            </Link>
+          </li>
         </ul>
         <button className={styles.logoutButton} onClick={handleLogout}>Logout</button>
       </nav>

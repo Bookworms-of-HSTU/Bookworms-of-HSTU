@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { posts } from '../../../data/posts';
 import styles from './page.module.css';
 
@@ -10,7 +11,7 @@ export default function Post({ params }) {
 
   return (
     <div className={styles.container}>
-      <img src={post.image} alt={post.title} className={styles.image} />
+      <Image src={post.image} alt={post.title} className={styles.image} width={800} height={400} />
       <h1 className={styles.title}>{post.title}</h1>
       <div className={styles.date}>{post.date}</div>
       <div
