@@ -20,19 +20,20 @@ export default function Newsletter() {
   };
 
   return (
-    <section className={styles.newsletter}>
+    <section className={styles.newsletter} data-analytics-section="newsletter">
       <div className={styles.container}>
         <h2>Subscribe to Our Newsletter</h2>
         <p>Stay up to date with our latest news and events.</p>
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit} className={styles.form} data-analytics-id="newsletter-form-submission">
           <input
             type="email"
             placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            data-analytics-id="newsletter-email-input"
           />
-          <button type="submit">Subscribe</button>
+          <button type="submit" data-analytics-id="newsletter-subscribe-button">Subscribe</button>
         </form>
         {message && <p className={styles.message}>{message}</p>}
       </div>
