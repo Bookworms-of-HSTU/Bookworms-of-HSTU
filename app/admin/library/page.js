@@ -1,114 +1,159 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getBooks, addBook, updateBook, deleteBook } from '../../lib/actions';
 import styles from './page.module.css';
 
-const initialBooks = [
-  {
-    id: 1,
-    title: 'Book 1',
-    author: 'Author 1',
-  },
-  {
-    id: 2,
-    title: 'Book 2',
-    author: 'Author 2',
-  },
-];
+export default function LibraryAdmin() {
+  const [books, setBooks] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentBook, setCurrentBook] = useState({
+    id: null,
+    title: '',
+    author: '',
+    hasHardcopy: false,
+    hasSoftcopy: false,
+    pdfLink: '',
+  });
+  const [isEditing, setIsEditing] = useState(false);
 
-export default function Library() {
-  const [books, setBooks] = useState(initialBooks);
-  const [newBook, setNewBook] = useState({ title: '', author: '' });
-  const [editingBook, setEditingBook] = useState(null);
+  useEffect(() => {
+    async function fetchBooks() {
+      const allBooks = await getBooks();
+      setBooks(allBooks);
+    }
+    fetchBooks();
+  }, []);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewBook({ ...newBook, [name]: value });
+    const { name, value, type, checked } = e.target;
+    const inputValue = type === 'checkbox' ? checked : value;
+    setCurrentBook({ ...currentBook, [name]: inputValue });
   };
 
-  const handleAddBook = (e) => {
-    e.preventDefault();
-    setBooks([...books, { ...newBook, id: Date.now() }]);
-    setNewBook({ title: '', author: '' });
+  const handleSaveBook = async () => {
+    if (isEditing) {
+      await updateBook(currentBook);
+    } else {
+      await addBook(currentBook);
+    }
+    const allBooks = await getBooks();
+    setBooks(allBooks);
+    closeModal();
   };
 
-  const handleDeleteBook = (id) => {
-    setBooks(books.filter(book => book.id !== id));
+  const handleEdit = (book) => {
+    setCurrentBook(book);
+    setIsEditing(true);
+    setIsModalOpen(true);
   };
 
-  const handleEditBook = (book) => {
-    setEditingBook(book);
+  const handleDelete = async (bookId) => {
+    await deleteBook(bookId);
+    const allBooks = await getBooks();
+    setBooks(allBooks);
   };
 
-  const handleUpdateBook = (e) => {
-    e.preventDefault();
-    setBooks(books.map(book => book.id === editingBook.id ? editingBook : book));
-    setEditingBook(null);
+  const openModal = () => {
+    setCurrentBook({ id: null, title: '', author: '', hasHardcopy: false, hasSoftcopy: false, pdfLink: '' });
+    setIsEditing(false);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Manage Library Books</h1>
+      <button className={styles.addButton} onClick={openModal}>
+        Add New Book
+      </button>
 
-      <div className={styles.addBookForm}>
-        <h2>Add New Book</h2>
-        <form onSubmit={handleAddBook}>
-          <div className={styles.formGroup}>
-            <label htmlFor="title">Title</label>
-            <input type="text" id="title" name="title" value={newBook.title} onChange={handleInputChange} />
-          </div>
-          <div className={styles.formGroup}>
-            <label htmlFor="author">Author</label>
-            <input type="text" id="author" name="author" value={newBook.author} onChange={handleInputChange} />
-          </div>
-          <button type="submit" className={styles.submitButton}>Add Book</button>
-        </form>
-      </div>
-
-      <div className={styles.bookList}>
-        <h2>Existing Books</h2>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {books.map(book => (
-              <tr key={book.id}>
-                <td>{book.title}</td>
-                <td>{book.author}</td>
-                <td>
-                  <button className={styles.editButton} onClick={() => handleEditBook(book)}>Edit</button>
-                  <button className={styles.deleteButton} onClick={() => handleDeleteBook(book.id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {editingBook && (
+      {isModalOpen && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <h2>Edit Book</h2>
-            <form onSubmit={handleUpdateBook}>
-              <div className={styles.formGroup}>
-                <label htmlFor="edit-title">Title</label>
-                <input type="text" id="edit-title" name="title" value={editingBook.title} onChange={(e) => setEditingBook({ ...editingBook, title: e.target.value })} />
-              </div>
-              <div className={styles.formGroup}>
-                <label htmlFor="edit-author">Author</label>
-                <input type="text" id="edit-author" name="author" value={editingBook.author} onChange={(e) => setEditingBook({ ...editingBook, author: e.target.value })} />
-              </div>
-              <button type="submit" className={styles.submitButton}>Update Book</button>
-              <button type="button" className={styles.cancelButton} onClick={() => setEditingBook(null)}>Cancel</button>
-            </form>
+            <h2>{isEditing ? 'Edit Book' : 'Add New Book'}</h2>
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              value={currentBook.title}
+              onChange={handleInputChange}
+            />
+            <input
+              type="text"
+              name="author"
+              placeholder="Author"
+              value={currentBook.author}
+              onChange={handleInputChange}
+            />
+            <div className={styles.checkboxGroup}>
+              <label>
+                <input
+                  type="checkbox"
+                  name="hasHardcopy"
+                  checked={currentBook.hasHardcopy}
+                  onChange={handleInputChange}
+                />
+                Hardcopy Available
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  name="hasSoftcopy"
+                  checked={currentBook.hasSoftcopy}
+                  onChange={handleInputChange}
+                />
+                Softcopy Available
+              </label>
+            </div>
+            {currentBook.hasSoftcopy && (
+              <input
+                type="text"
+                name="pdfLink"
+                placeholder="PDF Link"
+                value={currentBook.pdfLink}
+                onChange={handleInputChange}
+              />
+            )}
+            <div className={styles.modalActions}>
+              <button onClick={handleSaveBook}>{isEditing ? 'Update Book' : 'Add Book'}</button>
+              <button onClick={closeModal}>Cancel</button>
+            </div>
           </div>
         </div>
       )}
+
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Availability</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {books.map((book) => (
+            <tr key={book.id}>
+              <td>{book.title}</td>
+              <td>{book.author}</td>
+              <td>
+                {book.hasHardcopy && 'Hardcopy'}
+                {book.hasHardcopy && book.hasSoftcopy && ', '}
+                {book.hasSoftcopy && 'Softcopy'}
+                {!book.hasHardcopy && !book.hasSoftcopy && 'Unavailable'}
+              </td>
+              <td>
+                <button className={styles.editButton} onClick={() => handleEdit(book)}>Edit</button>
+                <button className={styles.deleteButton} onClick={() => handleDelete(book.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

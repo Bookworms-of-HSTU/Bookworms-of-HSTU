@@ -30,11 +30,6 @@ export default function Magazines() {
     setNewMagazine({ ...newMagazine, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    setNewMagazine({ ...newMagazine, [name]: files[0] });
-  };
-
   const handleAddMagazine = (e) => {
     e.preventDefault();
     setMagazines([...magazines, { ...newMagazine, id: Date.now() }]);
@@ -71,12 +66,12 @@ export default function Magazines() {
             <input type="number" id="issue" name="issue" value={newMagazine.issue} onChange={handleInputChange} />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="pdf">PDF</label>
-            <input type="file" id="pdf" name="pdf" onChange={handleFileChange} />
+            <label htmlFor="pdf">PDF URL</label>
+            <input type="text" id="pdf" name="pdf" value={newMagazine.pdf} onChange={handleInputChange} />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="image">Cover Image</label>
-            <input type="file" id="image" name="image" onChange={handleFileChange} />
+            <label htmlFor="image">Cover Image URL</label>
+            <input type="text" id="image" name="image" value={newMagazine.image} onChange={handleInputChange} />
           </div>
           <button type="submit" className={styles.submitButton}>Add Magazine</button>
         </form>
@@ -121,12 +116,12 @@ export default function Magazines() {
                 <input type="number" id="edit-issue" name="issue" value={editingMagazine.issue} onChange={(e) => setEditingMagazine({ ...editingMagazine, issue: e.target.value })} />
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="edit-pdf">PDF</label>
-                <input type="file" id="edit-pdf" name="pdf" onChange={(e) => setEditingMagazine({ ...editingMagazine, pdf: e.target.files[0] })} />
+                <label htmlFor="edit-pdf">PDF URL</label>
+                <input type="text" id="edit-pdf" name="pdf" value={editingMagazine.pdf} onChange={(e) => setEditingMagazine({ ...editingMagazine, pdf: e.target.value })} />
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="edit-image">Cover Image</label>
-                <input type="file" id="edit-image" name="image" onChange={(e) => setEditingMagazine({ ...editingMagazine, image: e.target.files[0] })} />
+                <label htmlFor="edit-image">Cover Image URL</label>
+                <input type="text" id="edit-image" name="image" value={editingMagazine.image} onChange={(e) => setEditingMagazine({ ...editingMagazine, image: e.target.value })} />
               </div>
               <button type="submit" className={styles.submitButton}>Update Magazine</button>
               <button type="button" className={styles.cancelButton} onClick={() => setEditingMagazine(null)}>Cancel</button>

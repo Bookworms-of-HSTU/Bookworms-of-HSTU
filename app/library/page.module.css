@@ -1,0 +1,62 @@
+.container {
+  padding: 4rem 2rem;
+}
+
+.title {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.bookGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.bookCard {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.bookTitle {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.bookAuthor {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.availabilityContainer {
+  margin-bottom: 1rem;
+}
+
+.availability {
+  font-weight: bold;
+  color: #0070f3;
+}
+
+.pdfLink {
+  display: inline-block;
+  background-color: #28a745;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.pdfLink:hover {
+  background-color: #218838;
+}

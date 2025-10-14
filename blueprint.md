@@ -2,41 +2,58 @@
 
 This document outlines the plan for creating an admin panel for the website. The admin panel will provide a centralized interface for managing various aspects of the site, including committee members, blogs, magazines, gallery events, and library books.
 
-## Plan
+## Style, Design, and Features
 
-1.  **Create the basic admin panel structure:** Design a clear and intuitive layout for the admin panel, using a card-based design to separate different management sections. - **Done**
-2.  **Implement committee member management:** Add functionality to add, edit, and delete committee members in the about section. - **Done**
-    *   Create a new page at `/admin/committee` for managing committee members.
-    *   Add a dropdown to select one of the three committees: "Advisory Committee", "Executive Committee", and "Trustee Board".
-    *   Add a form to add new members with fields for name, position, and photo.
-    *   Display a table of existing members with "Edit" and "Delete" buttons.
-    *   Implement state management for the form and member data.
-    *   Add a modal for editing member information.
-3.  **Implement blog management:** Create a system for writing, editing, and deleting blog posts. - **Done**
-    *   Create a new page at `/admin/blogs` for managing blog posts.
-    *   Add a form to add new blog posts with fields for title, author, content, and a feature image.
-    *   Display a table of existing blog posts with "Edit" and "Delete" buttons.
-    *   Implement state management for the form and blog data.
-    *   Add a modal for editing blog posts.
-4.  **Implement magazine management:** Develop a feature for managing magazine issues. - **Done**
-    *   Create a new page at `/admin/magazines` for managing magazine issues.
-    *   Add a form to upload new magazine issues with fields for title, issue number, a PDF file, and a cover image.
-    *   Display a table of existing magazine issues with "Edit" and "Delete" buttons.
-    *   Implement state management for the form and magazine data.
-    *   Add a modal for editing magazine issues.
-5.  **Implement gallery event management:** Add tools for organizing gallery events and managing photos. - **Done**
-    *   Create a new page at `/admin/gallery` for managing gallery events.
-    *   Add a form to create new gallery events with fields for title, date, and multiple images.
-    *   Display a table of existing events with "Edit" and "Delete" buttons.
-    *   Implement state management for the form and event data.
-    *   Add a modal for editing gallery events.
-6.  **Implement library book management:** Create a system for managing the library's book collection. - **Done**
-    *   Create a new page at `/admin/library` for managing library books.
-    *   Add a form to add new books with fields for title and author.
-    *   Display a table of existing books with "Edit" and "Delete" buttons.
-    *   Implement state management for the form and book data.
-    *   Add a modal for editing book information.
-7.  **Add admin layout and logout:** Create a consistent admin layout with a sidebar and a logout button. - **Done**
-    *   Create a layout component for the admin section.
-    *   Add a sidebar with links to all admin pages.
-    *   Include a logout button with placeholder functionality.
+*   **Admin Panel:** A comprehensive admin panel to manage site content.
+*   **Layout:** A clean, card-based design for easy navigation.
+*   **Committee Management:** Add, edit, and delete committee members.
+*   **Blog Management:** Add, edit, and delete blog posts.
+*   **Magazine Management:** Add, edit, and delete magazine issues.
+*   **Gallery Management:**
+    *   Admins can create, edit, and delete gallery events.
+    *   Admins can dynamically add, edit, and delete image links for each event.
+    *   A custom Next.js image loader is used for optimization.
+*   **Library Management:**
+    *   Add, edit, and delete library books using a `books.json` file for data persistence.
+    *   Fields: Title, Author, Availability (Hardcopy and/or Softcopy), PDF Link.
+    *   Public-facing library displays availability with a "View PDF" button for softcopies and text indicating hardcopy availability.
+*   **Contact Page:** A new page at `/contact` with a form for users to send messages.
+*   **Admin Layout:** A consistent layout with a sidebar for navigation and a logout button.
+
+## Current Request: Improve Gallery Image Management
+
+*   **Goal:** Improve the user interface for managing gallery images in the admin panel.
+*   **Steps:**
+    1.  **Update Admin Gallery Page:** Replaced the comma-separated text field with an interactive interface that allows admins to dynamically add, edit, and delete individual image links. - **Done**
+    2.  Update the `blueprint.md` to reflect these changes. - **Done**
+
+## Previous Plans
+
+### Use Image Links in Gallery
+
+*   **Goal:** Modify the gallery to use external image links instead of local uploads.
+*   **Steps:** Replaced the file upload with a text field for comma-separated image URLs, created a custom image loader, and configured Next.js to use it.
+
+### Connect Admin Panel to Public Library
+
+*   **Goal:** Connect the admin panel to the public library so that changes made in the admin panel are reflected in the public library.
+*   **Steps:** Implemented a file-based data persistence strategy using a `books.json` file and server actions.
+
+### Implement Flexible Library Availability
+
+*   **Goal:** Allow a book to be available as a hardcopy, a softcopy, or both.
+*   **Steps:** Implemented checkboxes for availability in the admin panel and updated the public library page to reflect the new availability options.
+
+### Implement Enhanced Library Availability
+
+*   **Goal:** Enhance the library feature to allow admins to specify book availability as "Hardcopy" or "Softcopy" with a PDF link.
+*   **Steps:** Implemented a dropdown for availability and updated the public library page accordingly.
+
+### Fix 404 Error and Restore Public Library
+
+*   **Goal:** Resolve a persistent 404 error caused by the accidental deletion of the public library page.
+*   **Steps:** Restored the public library page, corrected navigation, and created a contact page.
+
+### Initial Admin Panel Creation
+
+*   **Steps:** Created the basic admin panel structure and implemented management for committees, blogs, magazines, galleries, and the library.

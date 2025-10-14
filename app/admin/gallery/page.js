@@ -8,19 +8,19 @@ const initialEvents = [
     id: 1,
     title: 'Event 1',
     date: '2023-01-01',
-    images: ['/images/placeholder.jpg'],
+    images: ['https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'],
   },
   {
     id: 2,
     title: 'Event 2',
     date: '2023-02-01',
-    images: ['/images/placeholder.jpg'],
+    images: ['https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'],
   },
 ];
 
 export default function Gallery() {
   const [events, setEvents] = useState(initialEvents);
-  const [newEvent, setNewEvent] = useState({ title: '', date: '', images: [] });
+  const [newEvent, setNewEvent] = useState({ title: '', date: '', images: [''] });
   const [editingEvent, setEditingEvent] = useState(null);
 
   const handleInputChange = (e) => {
@@ -28,35 +28,63 @@ export default function Gallery() {
     setNewEvent({ ...newEvent, [name]: value });
   };
 
-  const handleImageChange = (e) => {
-    const { files } = e.target;
-    setNewEvent({ ...newEvent, images: [...files] });
+  const handleImageChange = (index, value) => {
+    const images = [...newEvent.images];
+    images[index] = value;
+    setNewEvent({ ...newEvent, images });
+  };
+
+  const addImageInput = () => {
+    setNewEvent({ ...newEvent, images: [...newEvent.images, ''] });
+  };
+
+  const removeImageInput = (index) => {
+    const images = [...newEvent.images];
+    images.splice(index, 1);
+    setNewEvent({ ...newEvent, images });
   };
 
   const handleAddEvent = (e) => {
     e.preventDefault();
-    setEvents([...events, { ...newEvent, id: Date.now() }]);
-    setNewEvent({ title: '', date: '', images: [] });
+    const filteredImages = newEvent.images.filter(url => url.trim() !== '');
+    setEvents([...events, { ...newEvent, id: Date.now(), images: filteredImages }]);
+    setNewEvent({ title: '', date: '', images: [''] });
   };
 
-  const handleDeleteEvent = (id) => {
-    setEvents(events.filter(event => event.id !== id));
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditingEvent({ ...editingEvent, [name]: value });
   };
 
-  const handleEditEvent = (event) => {
-    setEditingEvent(event);
+  const handleEditImageChange = (index, value) => {
+    const images = [...editingEvent.images];
+    images[index] = value;
+    setEditingEvent({ ...editingEvent, images });
+  };
+
+  const addEditImageInput = () => {
+    setEditingEvent({ ...editingEvent, images: [...editingEvent.images, ''] });
+  };
+
+  const removeEditImageInput = (index) => {
+    const images = [...editingEvent.images];
+    images.splice(index, 1);
+    setEditingEvent({ ...editingEvent, images });
   };
 
   const handleUpdateEvent = (e) => {
     e.preventDefault();
-    setEvents(events.map(event => event.id === editingEvent.id ? editingEvent : event));
+    const filteredImages = editingEvent.images.filter(url => url.trim() !== '');
+    const updatedEvents = events.map(event =>
+      event.id === editingEvent.id ? { ...editingEvent, images: filteredImages } : event
+    );
+    setEvents(updatedEvents);
     setEditingEvent(null);
   };
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Manage Gallery Events</h1>
-
+      <h1 className={styles.title}>Manage Gallery</h1>
       <div className={styles.addEventForm}>
         <h2>Add New Event</h2>
         <form onSubmit={handleAddEvent}>
@@ -69,36 +97,35 @@ export default function Gallery() {
             <input type="date" id="date" name="date" value={newEvent.date} onChange={handleInputChange} />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="images">Images</label>
-            <input type="file" id="images" name="images" multiple onChange={handleImageChange} />
+            <label>Image Links</label>
+            {newEvent.images.map((image, index) => (
+              <div key={index} className={styles.imageInputContainer}>
+                <input
+                  type="text"
+                  value={image}
+                  onChange={(e) => handleImageChange(index, e.target.value)}
+                  placeholder="https://example.com/image.jpg"
+                />
+                <button type="button" className={styles.deleteButton} onClick={() => removeImageInput(index)}>Delete</button>
+              </div>
+            ))}
+            <button type="button" className={styles.addButton} onClick={addImageInput}>Add Image</button>
           </div>
           <button type="submit" className={styles.submitButton}>Add Event</button>
         </form>
       </div>
 
       <div className={styles.eventList}>
-        <h2>Existing Events</h2>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Date</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {events.map(event => (
-              <tr key={event.id}>
-                <td>{event.title}</td>
-                <td>{event.date}</td>
-                <td>
-                  <button className={styles.editButton} onClick={() => handleEditEvent(event)}>Edit</button>
-                  <button className={styles.deleteButton} onClick={() => handleDeleteEvent(event.id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {events.map(event => (
+          <div key={event.id} className={styles.eventItem}>
+            <h3>{event.title}</h3>
+            <p>{event.date}</p>
+            <div className={styles.actions}>
+              <button className={styles.editButton} onClick={() => setEditingEvent(event)}>Edit</button>
+              <button className={styles.deleteButton} onClick={() => setEvents(events.filter(e => e.id !== event.id))}>Delete</button>
+            </div>
+          </div>
+        ))}
       </div>
 
       {editingEvent && (
@@ -108,15 +135,26 @@ export default function Gallery() {
             <form onSubmit={handleUpdateEvent}>
               <div className={styles.formGroup}>
                 <label htmlFor="edit-title">Title</label>
-                <input type="text" id="edit-title" name="title" value={editingEvent.title} onChange={(e) => setEditingEvent({ ...editingEvent, title: e.target.value })} />
+                <input type="text" id="edit-title" name="title" value={editingEvent.title} onChange={handleEditChange} />
               </div>
               <div className={styles.formGroup}>
                 <label htmlFor="edit-date">Date</label>
-                <input type="date" id="edit-date" name="date" value={editingEvent.date} onChange={(e) => setEditingEvent({ ...editingEvent, date: e.target.value })} />
+                <input type="date" id="edit-date" name="date" value={editingEvent.date} onChange={handleEditChange} />
               </div>
               <div className={styles.formGroup}>
-                <label htmlFor="edit-images">Images</label>
-                <input type="file" id="edit-images" name="images" multiple onChange={(e) => setEditingEvent({ ...editingEvent, images: [...e.target.files] })} />
+                <label>Image Links</label>
+                {editingEvent.images.map((image, index) => (
+                  <div key={index} className={styles.imageInputContainer}>
+                    <input
+                      type="text"
+                      value={image}
+                      onChange={(e) => handleEditImageChange(index, e.target.value)}
+                      placeholder="https://example.com/image.jpg"
+                    />
+                    <button type="button" className={styles.deleteButton} onClick={() => removeEditImageInput(index)}>Delete</button>
+                  </div>
+                ))}
+                 <button type="button" className={styles.addButton} onClick={addEditImageInput}>Add Image</button>
               </div>
               <button type="submit" className={styles.submitButton}>Update Event</button>
               <button type="button" className={styles.cancelButton} onClick={() => setEditingEvent(null)}>Cancel</button>

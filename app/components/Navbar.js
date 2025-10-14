@@ -14,7 +14,6 @@ export default function Navbar() {
           <Link href="/blog">Blog</Link>
           <Link href="/magazine">Magazine</Link>
           <Link href="/gallery">Gallery</Link>
-          <Link href="/news">News</Link>
           <Link href="/library">Library</Link>
           <Link href="/contact">Contact</Link>
         </div>
