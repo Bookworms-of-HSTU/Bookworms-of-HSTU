@@ -1,18 +1,27 @@
 import { getNotices } from '../lib/actions';
+import styles from './Notices.module.css';
 
 export default async function NoticesPage() {
   const notices = await getNotices();
 
+  // Sort notices by date in descending order
+  const sortedNotices = notices.sort((a, b) => new Date(b.date) - new Date(a.date));
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">Notices and News</h1>
-      <div className="grid gap-4">
-        {notices.map(notice => (
-          <div key={notice.id} className="border p-4 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-2">{notice.title}</h2>
-            <p>{notice.content}</p>
-          </div>
-        ))}
+    <div className={styles.noticesPage}>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Notices and News</h1>
+        <div className={styles.noticesGrid}>
+          {sortedNotices.map(notice => (
+            <div key={notice.id} className={styles.noticeCard}>
+              <div className={styles.noticeContent}>
+                <h2 className={styles.noticeTitle}>{notice.title}</h2>
+                <p className={styles.noticeDate}>{new Date(notice.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <p className={styles.noticeText}>{notice.content}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

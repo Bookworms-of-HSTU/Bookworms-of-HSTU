@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import Image from 'next/image';
+import Carousel from '../components/Carousel';
 
 // Placeholder data until connected to a backend
 const initialEvents = [
@@ -35,13 +35,7 @@ export default function Gallery() {
         <div key={event.id} className={styles.eventSection}>
           <h2 className={styles.eventTitle}>{event.title}</h2>
           <p className={styles.eventDate}>{event.date}</p>
-          <div className={styles.galleryGrid}>
-            {event.images.map((image, index) => (
-              <div key={index} className={styles.photo}>
-                <Image src={image} alt={`${event.title} image ${index + 1}`} width={400} height={300} objectFit="cover" />
-              </div>
-            ))}
-          </div>
+          <Carousel images={event.images} />
         </div>
       ))}
     </div>

@@ -13,6 +13,7 @@ This document outlines the plan for creating an admin panel for the website. The
     *   Admins can create, edit, and delete gallery events.
     *   Admins can dynamically add, edit, and delete image links for each event.
     *   A custom Next.js image loader is used for optimization.
+    *   The public gallery now uses a carousel component to display event images, providing a more interactive user experience with navigation buttons and dot indicators.
 *   **Library Management:**
     *   Add, edit, and delete library books using a `books.json` file for data persistence.
     *   Fields: Title, Author, Availability (Hardcopy and/or Softcopy), PDF Link.
@@ -21,75 +22,52 @@ This document outlines the plan for creating an admin panel for the website. The
     *   A public page at `/notices` to display notices and news.
     *   Admin panel integration to add, edit, and delete notices.
     *   Data is stored in a `notices.json` file.
+    *   Admins can add a date to each notice.
+    *   The admin notice page has been polished with a professional and clean UI, including refined notice cards with hover effects, a sleeker modal for add/edit operations, and improved typography and spacing.
+    *   Redundant titles have been removed for a cleaner look.
+    *   Edit and delete buttons in the notice manager are now distinguishable with unique hover colors.
+    *   Textfield overflow in the add/edit modal has been fixed.
 *   **Contact Page:** A new page at `/contact` with a form for users to send messages.
 *   **Admin Layout:** A consistent layout with a sidebar for navigation and a logout button.
 *   **Newsletter Subscription:** A newsletter subscription form on the homepage to collect user emails.
 *   **CTA Button:** The main call-to-action button on the homepage is "Join Us" and links to a placeholder URL.
 
-## Current Request: Add Notice and News Feature
+## Current Request: Fix Notice Manager UI Issues
 
-*   **Goal:** Add a "Notice and News" page and admin panel functionality.
+*   **Goal:** Address UI issues in the notice manager to improve usability.
 *   **Steps:**
-    1.  Create `notices.json` to store notices. - **Done**
-    2.  Update `app/lib/actions.js` with notice management functions. - **Done**
-    3.  Create an admin page at `app/admin/notices` to manage notices. - **Done**
-    4.  Create a `NoticeManager` component for the admin UI. - **Done**
-    5.  Add a "Notice and News" link to the admin sidebar. - **Done**
-    6.  Create a public page at `/notices` to display notices. - **Done**
-    7.  Add a "Notice and News" link to the main navbar. - **Done**
-    8.  Update the `blueprint.md` to reflect these changes. - **Done**
+    1.  Make the edit and delete buttons distinguishable with unique hover colors. - **Done**
+    2.  Fix the textfield overflow in the add/edit modal. - **Done**
+    3.  Update the `blueprint.md` file to document these fixes. - **Done**
 
 ## Previous Plans
 
-### Change CTA Button
+### Polish Notice Management UI
 
-*   **Goal:** Change the main call-to-action button on the homepage.
+*   **Goal:** Refine the user interface of the admin's notice management page for a cleaner, more professional look.
 *   **Steps:**
-    1.  Update the button text to "Join Us". - **Done**
-    2.  Set the button link to a placeholder (`#`). - **Done**
-    3.  Update the `blueprint.md` to reflect these changes. - **Done**
+    1.  Remove the redundant "Manage Notices" title from the main page. - **Done**
+    2.  Enhance the styling of the notice cards with hover effects and improved layout. - **Done**
+    3.  Polish the add/edit modal with a sleeker design. - **Done**
+    4.  Refine the overall typography and spacing for better readability. - **Done**
+    5.  Update the `blueprint.md` to reflect these UI enhancements. - **Done**
 
-### Add Newsletter Subscription
+### Enhance Notice Management
 
-*   **Goal:** Add a newsletter subscription form to the homepage.
+*   **Goal:** Add a date feature and improve the UI of the notice management system.
 *   **Steps:**
-    1.  Create a `subscribers.json` file to store subscriber emails. - **Done**
-    2.  Create a server action to add subscribers to the `subscribers.json` file. - **Done**
-    3.  Create a `Newsletter` component with an email input and subscribe button. - **Done**
-    4.  Add the `Newsletter` component to the homepage. - **Done**
+    1.  Add a `date` field to each notice. - **Done**
+    2.  Update the `NoticeManager` component with a date picker and a more refined, card-based layout. - **Done**
+    3.  Modify the server actions to handle the new `date` field. - **Done**
+    4.  Enhance the public notices page to display the date alongside each notice. - **Done**
     5.  Update the `blueprint.md` to reflect these changes. - **Done**
 
-### Improve Gallery Image Management
+### Enhance Gallery with Carousel
 
-*   **Goal:** Improve the user interface for managing gallery images in the admin panel.
+*   **Goal:** Enhance the gallery with an interactive carousel.
 *   **Steps:**
-    1.  **Update Admin Gallery Page:** Replaced the comma-separated text field with an interactive interface that allows admins to dynamically add, edit, and delete individual image links. - **Done**
-
-### Use Image Links in Gallery
-
-*   **Goal:** Modify the gallery to use external image links instead of local uploads.
-*   **Steps:** Replaced the file upload with a text field for comma-separated image URLs, created a custom image loader, and configured Next.js to use it.
-
-### Connect Admin Panel to Public Library
-
-*   **Goal:** Connect the admin panel to the public library so that changes made in the admin panel are reflected in the public library.
-*   **Steps:** Implemented a file-based data persistence strategy using a `books.json` file and server actions.
-
-### Implement Flexible Library Availability
-
-*   **Goal:** Allow a book to be available as a hardcopy, a softcopy, or both.
-*   **Steps:** Implemented checkboxes for availability in the admin panel and updated the public library page to reflect the new availability options.
-
-### Implement Enhanced Library Availability
-
-*   **Goal:** Enhance the library feature to allow admins to specify book availability as "Hardcopy" or "Softcopy" with a PDF link.
-*   **Steps:** Implemented a dropdown for availability and updated the public library page accordingly.
-
-### Fix 404 Error and Restore Public Library
-
-*   **Goal:** Resolve a persistent 404 error caused by the accidental deletion of the public library page.
-*   **Steps:** Restored the public library page, corrected navigation, and created a contact page.
-
-### Initial Admin Panel Creation
-
-*   **Steps:** Created the basic admin panel structure and implemented management for committees, blogs, magazines, galleries, and the library.
+    1.  Create a reusable `Carousel.js` component with navigation and dot indicators. - **Done**
+    2.  Create `Carousel.module.css` for styling. - **Done**
+    3.  Update the `app/gallery/page.js` to use the new `Carousel` component instead of a static grid. - **Done**
+    4.  Run linter to check for issues. - **Done**
+    5.  Update the `blueprint.md` to reflect these changes. - **Done**
