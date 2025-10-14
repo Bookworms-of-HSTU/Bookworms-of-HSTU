@@ -1,0 +1,74 @@
+/* Main container for the entire search component */
+.searchContainer {
+  position: relative; /* This is crucial for positioning the results */
+  width: 100%;
+}
+
+/* Styling for the Algolia SearchBox */
+.searchBox {
+  width: 100%;
+}
+
+/* Styling for the Hits container (the dropdown with results) */
+.hitsContainer {
+  position: absolute; /* Take the results out of the normal flow */
+  top: 100%; /* Position it right below the search bar */
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  z-index: 100; /* Ensure it appears above other content */
+  margin-top: 8px; /* A little space between search bar and results */
+}
+
+/* A single result item */
+.hit {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease;
+}
+
+.hit:hover {
+  background-color: #f5f5f5;
+}
+
+.hit:last-child {
+  border-bottom: none;
+}
+
+.hitTitle {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #5B21B6; /* A purple to match the theme */
+}
+
+.hitSnippet {
+  font-size: 0.875rem;
+  color: #555;
+  padding-top: 4px;
+}
+
+/* Overriding default InstantSearch styles */
+.searchBox .ais-SearchBox-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.searchBox .ais-SearchBox-input:focus {
+  outline: none;
+  border-color: #8B5CF6; /* Lighter purple on focus */
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.searchBox .ais-SearchBox-submit, .searchBox .ais-SearchBox-reset {
+  display: none; /* Hiding the default search and reset buttons */
+}

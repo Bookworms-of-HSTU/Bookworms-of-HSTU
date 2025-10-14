@@ -1,53 +1,63 @@
+/* The main navbar bar */
 .navbar {
   background-color: #3B006A;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* The main container that uses flexbox */
 .container {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
+  justify-content: space-between; /* Pushes the two main groups apart */
+  flex-wrap: nowrap; /* THE CRITICAL FIX: This forbids wrapping under any condition */
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
+}
+
+/* The container for the logo and the navigation links */
+.logoAndNav {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem; /* Space between logo and the nav links */
+  min-width: 0; /* Allows this container to shrink if needed on very small screens */
 }
 
 .logo {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #fff;
+  color: #F3E5F5;
   text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  flex-shrink: 0; /* Logo should not shrink */
 }
 
 .logo span {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .logo span {
-    display: inline;
-  }
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .navLinks {
   display: flex;
-  gap: 1.5rem;
-  align-items: center;
+  gap: 1.5rem; /* Space between each individual nav link */
+  white-space: nowrap; /* Ensure nav links don't wrap among themselves */
 }
 
 .navLinks a {
-  color: #f0f0f0;
+  color: #E1BEE7;
   text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
 }
 
 .navLinks a:hover {
-  color: #fff;
+  color: #FFFFFF;
+}
+
+/* The container for the search component */
+.searchWrapper {
+  max-width: 250px;
+  /* Removed width: 100% which was contributing to the layout issue */
 }
