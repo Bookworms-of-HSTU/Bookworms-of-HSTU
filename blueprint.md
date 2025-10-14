@@ -19,28 +19,54 @@ This document outlines the plan for creating an admin panel for the website. The
     *   Fields: Title, Author, Availability (Hardcopy and/or Softcopy), PDF Link.
     *   Public-facing library displays availability with a "View PDF" button for softcopies and text indicating hardcopy availability.
 *   **Notice and News Management:**
-    *   A public page at `/notices` to display notices and news.
+    *   A public page at `/notices` to display notices and news in a full-width, single-column layout.
+    *   Notices are sorted by date in descending order, showing the latest notice first.
     *   Admin panel integration to add, edit, and delete notices.
     *   Data is stored in a `notices.json` file.
-    *   Admins can add a date to each notice.
     *   The admin notice page has been polished with a professional and clean UI, including refined notice cards with hover effects, a sleeker modal for add/edit operations, and improved typography and spacing.
-    *   Redundant titles have been removed for a cleaner look.
-    *   Edit and delete buttons in the notice manager are now distinguishable with unique hover colors.
-    *   Textfield overflow in the add/edit modal has been fixed.
 *   **Contact Page:** A new page at `/contact` with a form for users to send messages.
 *   **Admin Layout:** A consistent layout with a sidebar for navigation and a logout button.
 *   **Newsletter Subscription:** A newsletter subscription form on the homepage to collect user emails.
 *   **CTA Button:** The main call-to-action button on the homepage is "Join Us" and links to a placeholder URL.
+*   **Navbar:**
+    *   The site logo has been added to the top-left of the navbar and its size increased.
+    *   The navbar background color has been changed to a dark purple (`#3B006A`).
+    *   Navigation link colors have been adjusted for better visibility against the new background.
 
-## Current Request: Fix Notice Manager UI Issues
+## Current Request: Update Navbar Style
+
+*   **Goal:** Make the logo bigger and change the navbar color.
+*   **Steps:**
+    1.  Increase the logo size in `Navbar.js`. - **Done**
+    2.  Change the navbar background color to `#3B006A` in `Navbar.module.css`. - **Done**
+    3.  Adjust navigation link colors for better contrast. - **Done**
+    4.  Update the `blueprint.md` file to document the changes. - **Done**
+
+## Previous Plans
+
+### Add Logo to Navbar
+
+*   **Goal:** Add the site logo to the navbar and adjust the layout.
+*   **Steps:**
+    1.  Update the `Navbar.js` component to include the logo. - **Done**
+    2.  Update the `Navbar.module.css` to style the logo and adjust link spacing. - **Done**
+    3.  Update the `blueprint.md` file to document the changes. - **Done**
+
+### Update Public Notices Layout
+
+*   **Goal:** Improve the layout and sorting of the public notices page.
+*   **Steps:**
+    1.  Update the CSS to display notices in a full-width, single-column layout. - **Done**
+    2.  Sort notices by date in descending order. - **Done**
+    3.  Update the `blueprint.md` to reflect these changes. - **Done**
+
+### Fix Notice Manager UI Issues
 
 *   **Goal:** Address UI issues in the notice manager to improve usability.
 *   **Steps:**
     1.  Make the edit and delete buttons distinguishable with unique hover colors. - **Done**
     2.  Fix the textfield overflow in the add/edit modal. - **Done**
     3.  Update the `blueprint.md` file to document these fixes. - **Done**
-
-## Previous Plans
 
 ### Polish Notice Management UI
 

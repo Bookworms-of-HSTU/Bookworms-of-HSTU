@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './Navbar.module.css';
 
 export default function Navbar() {
@@ -6,7 +7,8 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <div className={styles.container}>
         <Link href="/" className={styles.logo}>
-          Bookworms of HSTU
+          <Image src="/logo.png" alt="Bookworms of HSTU Logo" width={70} height={70} />
+          <span>Bookworms of HSTU</span>
         </Link>
         <div className={styles.navLinks}>
           <Link href="/">Home</Link>

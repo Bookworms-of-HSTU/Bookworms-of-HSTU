@@ -1,8 +1,10 @@
 .navbar {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 1rem 2rem;
+  background-color: #3B006A;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .container {
@@ -14,25 +16,38 @@
 }
 
 .logo {
-  font-family: 'Merriweather', serif;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
   text-decoration: none;
+}
+
+.logo span {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .logo span {
+    display: inline;
+  }
 }
 
 .navLinks {
   display: flex;
   gap: 1.5rem;
+  align-items: center;
 }
 
 .navLinks a {
-  color: white;
+  color: #f0f0f0;
   text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease;
+  font-weight: 500;
+  transition: color 0.2s;
 }
 
 .navLinks a:hover {
-  color: var(--accent-color);
+  color: #fff;
 }
