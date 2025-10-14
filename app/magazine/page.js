@@ -1,22 +1,67 @@
-import Image from 'next/image';
-import styles from './page.module.css';
-import { magazines } from '../../data/magazines';
+'use client';
 
-export default function Magazine() {
+import { useState, useEffect } from 'react';
+import styles from './page.module.css';
+import { firestore } from '../lib/firebase';
+import { collection, getDocs } from 'firebase/firestore';
+
+export default function MagazinePage() {
+  const [magazines, setMagazines] = useState([]);
+  const [selectedMagazine, setSelectedMagazine] = useState(null);
+
+  useEffect(() => {
+    const fetchMagazines = async () => {
+      const magazinesCollection = collection(firestore, 'magazines');
+      const magazineSnapshot = await getDocs(magazinesCollection);
+      const magazineList = magazineSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setMagazines(magazineList);
+      if (magazineList.length > 0) {
+        setSelectedMagazine(magazineList[0]);
+      }
+    };
+
+    fetchMagazines();
+  }, []);
+
+  const handleMagazineChange = (e) => {
+    const magazineId = e.target.value;
+    const magazine = magazines.find(m => m.id === magazineId);
+    setSelectedMagazine(magazine);
+  };
+
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Our Magazines</h1>
-      <div className={styles.magazineGrid}>
-        {magazines.map((magazine) => (
-          <div key={magazine.id} className={styles.magazineCard}>
-            <Image src={magazine.cover} alt={magazine.title} className={styles.magazineCover} width={300} height={400} />
-            <h2 className={styles.magazineTitle}>{magazine.title}</h2>
-            <p className={styles.magazineDate}>{magazine.date}</p>
-            <a href={magazine.url} target="_blank" rel="noopener noreferrer" className={styles.readButton}>
-              Read Now
+    <div 
+      className={styles.container}
+      style={selectedMagazine ? { backgroundImage: `url(${selectedMagazine.image})` } : {}}
+    >
+      <div className={styles.overlay}></div>
+      <div className={styles.content}>
+        <h1 className={styles.title}>Our Magazines</h1>
+        <div className={styles.controls}>
+          <select 
+            className={styles.dropdown}
+            onChange={handleMagazineChange} 
+            value={selectedMagazine ? selectedMagazine.id : ''}
+            data-analytics-id="magazine-dropdown"
+          >
+            {magazines.map(magazine => (
+              <option key={magazine.id} value={magazine.id}>
+                {magazine.title}
+              </option>
+            ))}
+          </select>
+          {selectedMagazine && (
+            <a 
+              href={selectedMagazine.pdf} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={styles.downloadButton}
+              data-analytics-id={`magazine-download-${selectedMagazine.id}`}
+            >
+              Download
             </a>
-          </div>
-        ))}
+          )}
+        </div>
       </div>
     </div>
   );
