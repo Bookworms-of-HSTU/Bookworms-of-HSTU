@@ -1,0 +1,109 @@
+.container {
+  padding: 2rem;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.addMemberForm {
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.addMemberForm h2 {
+  margin-top: 0;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.formGroup input[type='text'],
+.select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.submitButton {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.memberList {
+  margin-top: 2rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.editButton,
+.deleteButton {
+  margin-right: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.editButton {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 50%;
+}
+
+.cancelButton {
+  margin-left: 1rem;
+  background-color: #6c757d;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
