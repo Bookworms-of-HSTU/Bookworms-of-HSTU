@@ -1,55 +1,66 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase'; // Adjust the import path as needed
 import styles from './page.module.css';
-
-const initialCommittees = {
-  'Advisory Committee': [
-    { id: 1, name: 'Dr. Advisor', position: 'Chief Advisor', photo: '/images/placeholder.jpg' },
-  ],
-  'Executive Committee': [
-    { id: 2, name: 'John Doe', position: 'President', photo: '/images/placeholder.jpg' },
-    { id: 3, name: 'Jane Smith', position: 'Vice President', photo: '/images/placeholder.jpg' },
-  ],
-  'Trustee Board': [
-    { id: 4, name: 'Mr. Trustee', position: 'Chairman', photo: '/images/placeholder.jpg' },
-  ],
-};
 
 const COMMITTEE_TYPES = ['Advisory Committee', 'Executive Committee', 'Trustee Board'];
 
 export default function Committee() {
-  const [committees, setCommittees] = useState(initialCommittees);
+  const [committees, setCommittees] = useState({});
   const [selectedCommittee, setSelectedCommittee] = useState(COMMITTEE_TYPES[0]);
   const [newMember, setNewMember] = useState({ name: '', position: '', photo: '', committee: COMMITTEE_TYPES[0] });
-  const [editingMember, setEditingMember] = useState(null); // The original member object
+  const [editingMember, setEditingMember] = useState(null);
   const [editFormState, setEditFormState] = useState(null);
+
+  useEffect(() => {
+    const fetchCommittees = async () => {
+      const committeesCollection = collection(db, 'committee');
+      const committeesSnapshot = await getDocs(committeesCollection);
+      const committeesList = committeesSnapshot.docs.reduce((acc, doc) => {
+        const data = doc.data();
+        const committeeName = data.committee;
+        if (!acc[committeeName]) {
+          acc[committeeName] = [];
+        }
+        acc[committeeName].push({ id: doc.id, ...data });
+        return acc;
+      }, {});
+      setCommittees(committeesList);
+    };
+
+    fetchCommittees();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewMember({ ...newMember, [name]: value });
   };
-  
+
   const handleEditFormChange = (e) => {
     const { name, value } = e.target;
     setEditFormState({ ...editFormState, [name]: value });
   };
 
-  const handleAddMember = (e) => {
+  const handleAddMember = async (e) => {
     e.preventDefault();
+    const docRef = await addDoc(collection(db, 'committee'), newMember);
     const { committee, ...memberData } = newMember;
     setCommittees(prev => ({
       ...prev,
-      [committee]: [...(prev[committee] || []), { ...memberData, id: Date.now() }],
+      [committee]: [...(prev[committee] || []), { ...memberData, id: docRef.id }],
     }));
     setNewMember({ name: '', position: '', photo: '', committee: selectedCommittee });
   };
 
-  const handleDeleteMember = (id) => {
-    setCommittees(prev => ({
-      ...prev,
-      [selectedCommittee]: prev[selectedCommittee].filter(member => member.id !== id),
-    }));
+  const handleDeleteMember = async (id) => {
+    await deleteDoc(doc(db, 'committee', id));
+    setCommittees(prev => {
+      const newCommittees = { ...prev };
+      newCommittees[selectedCommittee] = newCommittees[selectedCommittee].filter(member => member.id !== id);
+      return newCommittees;
+    });
   };
 
   const handleEditClick = (member) => {
@@ -57,48 +68,41 @@ export default function Committee() {
     setEditFormState({ ...member, committee: selectedCommittee });
   };
 
-  const handleUpdateMember = (e) => {
+  const handleUpdateMember = async (e) => {
     e.preventDefault();
     if (!editingMember) return;
 
-    const { committee: newCommittee, ...updatedMemberData } = editFormState;
+    const { id, ...updatedData } = editFormState;
+    const memberDoc = doc(db, 'committee', id);
+    await updateDoc(memberDoc, updatedData);
 
-    setCommittees(prev => {
-      const newCommitteesState = { ...prev };
-      
-      let originalCommitteeKey = null;
-      for (const key of Object.keys(newCommitteesState)) {
-          if (newCommitteesState[key].some(m => m.id === editingMember.id)) {
-              originalCommitteeKey = key;
-              break;
-          }
+    // Refetch or update state locally
+    const committeesCollection = collection(db, 'committee');
+    const committeesSnapshot = await getDocs(committeesCollection);
+    const committeesList = committeesSnapshot.docs.reduce((acc, doc) => {
+      const data = doc.data();
+      const committeeName = data.committee;
+      if (!acc[committeeName]) {
+        acc[committeeName] = [];
       }
-
-      if (originalCommitteeKey) {
-          newCommitteesState[originalCommitteeKey] = newCommitteesState[originalCommitteeKey].filter(m => m.id !== editingMember.id);
-      }
-
-      newCommitteesState[newCommittee] = [
-        ...(newCommitteesState[newCommittee] || []),
-        { ...updatedMemberData, id: editingMember.id }
-      ];
-
-      return newCommitteesState;
-    });
+      acc[committeeName].push({ id: doc.id, ...data });
+      return acc;
+    }, {});
+    setCommittees(committeesList);
 
     setEditingMember(null);
     setEditFormState(null);
   };
-  
+
   const handleCancelEdit = () => {
     setEditingMember(null);
     setEditFormState(null);
-  }
+  };
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Manage Committee Members</h1>
-      
+
       <div className={styles.formGroup}>
         <label htmlFor="committee-select">Select Committee:</label>
         <select

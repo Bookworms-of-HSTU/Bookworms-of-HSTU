@@ -1,10 +1,17 @@
+
 'use client';
 
 import { useRouter } from 'next/navigation';
 import styles from '../layout.module.css';
+import { useEffect, useState } from 'react';
 
 const AdminHeader = () => {
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = async () => {
     const res = await fetch('/api/logout', {
@@ -17,8 +24,7 @@ const AdminHeader = () => {
 
   return (
     <header className={styles.header}>
-      <h1>Admin Panel</h1>
-      <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
+      {mounted && <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>}
     </header>
   );
 };

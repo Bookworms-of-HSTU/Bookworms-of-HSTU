@@ -2,43 +2,32 @@
 
 import { promises as fs } from 'fs';
 import path from 'path';
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
-const booksFilePath = path.join(process.cwd(), 'lib', 'data', 'books.json');
 const subscribersFilePath = path.join(process.cwd(), 'lib', 'data', 'subscribers.json');
 const noticesFilePath = path.join(process.cwd(), 'lib', 'data', 'notices.json');
-const contactFilePath = path.join(process.cwd(), 'contact.json');
 
 export async function getBooks() {
-  try {
-    const fileContent = await fs.readFile(booksFilePath, 'utf8');
-    return JSON.parse(fileContent);
-  } catch (error) {
-    if (error.code === 'ENOENT') {
-      return []; // Return an empty array if the file doesn't exist
-    }
-    throw error;
-  }
+  const booksCollection = collection(db, "library");
+  const booksSnapshot = await getDocs(booksCollection);
+  const books = booksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  return books;
 }
 
 export async function addBook(book) {
-  const books = await getBooks();
-  const newBook = { ...book, id: Date.now().toString() };
-  books.push(newBook);
-  await fs.writeFile(booksFilePath, JSON.stringify(books, null, 2));
-  return newBook;
+  const docRef = await addDoc(collection(db, "library"), book);
+  return { ...book, id: docRef.id };
 }
 
 export async function updateBook(updatedBook) {
-  let books = await getBooks();
-  books = books.map(book => book.id === updatedBook.id ? updatedBook : book);
-  await fs.writeFile(booksFilePath, JSON.stringify(books, null, 2));
+  const bookRef = doc(db, "library", updatedBook.id);
+  await updateDoc(bookRef, updatedBook);
   return updatedBook;
 }
 
 export async function deleteBook(bookId) {
-  let books = await getBooks();
-  books = books.filter(book => book.id !== bookId);
-  await fs.writeFile(booksFilePath, JSON.stringify(books, null, 2));
+  await deleteDoc(doc(db, "library", bookId));
   return { success: true };
 }
 
@@ -98,21 +87,13 @@ export async function getNotices() {
   }
 
 export async function addContactMessage(message) {
-    const messages = await getContactMessages();
-    const newMessage = { ...message, id: Date.now().toString() };
-    messages.push(newMessage);
-    await fs.writeFile(contactFilePath, JSON.stringify(messages, null, 2));
-    return newMessage;
+    const docRef = await addDoc(collection(db, "messages"), message);
+    return { ...message, id: docRef.id };
 }
 
 export async function getContactMessages() {
-    try {
-        const fileContent = await fs.readFile(contactFilePath, 'utf8');
-        return JSON.parse(fileContent);
-    } catch (error) {
-        if (error.code === 'ENOENT') {
-            return [];
-        }
-        throw error;
-    }
+    const messagesCollection = collection(db, "messages");
+    const messagesSnapshot = await getDocs(messagesCollection);
+    const messages = messagesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return messages;
 }

@@ -1,9 +1,21 @@
 import Image from 'next/image';
-import { posts } from '../../../data/posts';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import styles from './page.module.css';
 
-export default function Post({ params }) {
-  const post = posts.find((p) => p.slug === params.slug);
+async function getPost(slug) {
+  const docRef = doc(db, "blogs", slug);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return { id: docSnap.id, ...docSnap.data() };
+  } else {
+    return null;
+  }
+}
+
+export default async function Post({ params }) {
+  const post = await getPost(params.slug);
 
   if (!post) {
     return <div>Post not found</div>;

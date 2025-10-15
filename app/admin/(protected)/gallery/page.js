@@ -1,27 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase'; // Adjust the import path as needed
 import styles from './page.module.css';
 
-const initialEvents = [
-  {
-    id: 1,
-    title: 'Event 1',
-    date: '2023-01-01',
-    images: ['https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'],
-  },
-  {
-    id: 2,
-    title: 'Event 2',
-    date: '2023-02-01',
-    images: ['https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'],
-  },
-];
-
 export default function Gallery() {
-  const [events, setEvents] = useState(initialEvents);
+  const [events, setEvents] = useState([]);
   const [newEvent, setNewEvent] = useState({ title: '', date: '', images: [''] });
   const [editingEvent, setEditingEvent] = useState(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const eventsCollection = collection(db, 'gallery');
+      const eventsSnapshot = await getDocs(eventsCollection);
+      const eventsList = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setEvents(eventsList);
+    };
+
+    fetchEvents();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -44,11 +42,17 @@ export default function Gallery() {
     setNewEvent({ ...newEvent, images });
   };
 
-  const handleAddEvent = (e) => {
+  const handleAddEvent = async (e) => {
     e.preventDefault();
     const filteredImages = newEvent.images.filter(url => url.trim() !== '');
-    setEvents([...events, { ...newEvent, id: Date.now(), images: filteredImages }]);
+    const docRef = await addDoc(collection(db, 'gallery'), { ...newEvent, images: filteredImages });
+    setEvents([...events, { ...newEvent, id: docRef.id, images: filteredImages }]);
     setNewEvent({ title: '', date: '', images: [''] });
+  };
+
+  const handleDeleteEvent = async (id) => {
+    await deleteDoc(doc(db, 'gallery', id));
+    setEvents(events.filter(event => event.id !== id));
   };
 
   const handleEditChange = (e) => {
@@ -72,9 +76,11 @@ export default function Gallery() {
     setEditingEvent({ ...editingEvent, images });
   };
 
-  const handleUpdateEvent = (e) => {
+  const handleUpdateEvent = async (e) => {
     e.preventDefault();
     const filteredImages = editingEvent.images.filter(url => url.trim() !== '');
+    const eventDoc = doc(db, 'gallery', editingEvent.id);
+    await updateDoc(eventDoc, { ...editingEvent, images: filteredImages });
     const updatedEvents = events.map(event =>
       event.id === editingEvent.id ? { ...editingEvent, images: filteredImages } : event
     );
@@ -122,7 +128,7 @@ export default function Gallery() {
             <p>{event.date}</p>
             <div className={styles.actions}>
               <button className={styles.editButton} onClick={() => setEditingEvent(event)}>Edit</button>
-              <button className={styles.deleteButton} onClick={() => setEvents(events.filter(e => e.id !== event.id))}>Delete</button>
+              <button className={styles.deleteButton} onClick={() => handleDeleteEvent(event.id)}>Delete</button>
             </div>
           </div>
         ))}

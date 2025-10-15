@@ -1,0 +1,244 @@
+[debug] [2025-10-15T01:46:13.631Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:46:13.645Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:46:13.647Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.648Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.648Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.648Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.649Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.649Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.649Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.650Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.650Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.650Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.651Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.651Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.651Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.651Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.652Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.652Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.652Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.652Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.652Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.653Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.654Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ [none]
+[debug] [2025-10-15T01:46:13.654Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.697Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/storage.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.697Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/storage.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.699Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.699Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.700Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/identitytoolkit.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.700Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/identitytoolkit.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.702Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/fcm.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.702Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/fcm.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.703Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.703Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.704Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseremoteconfig.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.704Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseremoteconfig.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.706Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.706Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.707Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.707Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.709Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com [none]
+[debug] [2025-10-15T01:46:13.709Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.784Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:46:13.785Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:46:13.786Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.786Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.787Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.787Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.787Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.787Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.787Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.787Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.787Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.788Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.788Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.788Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.788Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.788Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.789Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.789Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.789Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.789Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.789Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.789Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:46:13.789Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ [none]
+[debug] [2025-10-15T01:46:13.790Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.791Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/storage.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.791Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/storage.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.793Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.793Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.794Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/identitytoolkit.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.795Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/identitytoolkit.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.796Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/fcm.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.796Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/fcm.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.797Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.798Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.799Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseremoteconfig.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.799Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseremoteconfig.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.800Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.800Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.801Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-10-15T01:46:13.801Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:13.802Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com [none]
+[debug] [2025-10-15T01:46:13.802Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:46:14.802Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com 403
+[debug] [2025-10-15T01:46:14.802Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com [omitted]
+[debug] [2025-10-15T01:46:14.825Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-10-15T01:46:14.825Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.827Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com 200
+[debug] [2025-10-15T01:46:14.827Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.828Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/storage.googleapis.com 200
+[debug] [2025-10-15T01:46:14.828Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/storage.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.844Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/identitytoolkit.googleapis.com 200
+[debug] [2025-10-15T01:46:14.844Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/identitytoolkit.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.853Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseremoteconfig.googleapis.com 200
+[debug] [2025-10-15T01:46:14.853Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseremoteconfig.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.860Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-10-15T01:46:14.860Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.861Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/fcm.googleapis.com 200
+[debug] [2025-10-15T01:46:14.861Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/fcm.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.871Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com 200
+[debug] [2025-10-15T01:46:14.871Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.909Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com 403
+[debug] [2025-10-15T01:46:14.909Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com [omitted]
+[debug] [2025-10-15T01:46:14.910Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/identitytoolkit.googleapis.com 200
+[debug] [2025-10-15T01:46:14.910Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/identitytoolkit.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.921Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-10-15T01:46:14.921Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.922Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/fcm.googleapis.com 200
+[debug] [2025-10-15T01:46:14.922Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/fcm.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.929Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-10-15T01:46:14.929Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.932Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/storage.googleapis.com 200
+[debug] [2025-10-15T01:46:14.932Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/storage.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.941Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseremoteconfig.googleapis.com 200
+[debug] [2025-10-15T01:46:14.941Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseremoteconfig.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.950Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com 200
+[debug] [2025-10-15T01:46:14.950Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:14.974Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com 200
+[debug] [2025-10-15T01:46:14.975Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com [omitted]
+[debug] [2025-10-15T01:46:15.279Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ 200
+[debug] [2025-10-15T01:46:15.281Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ [omitted]
+[debug] [2025-10-15T01:46:15.282Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:46:15.290Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:46:15.293Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-15T01:46:15.293Z] > authorizing via signed-in user (princekhan7748@gmail.com)
+[debug] [2025-10-15T01:46:15.302Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ 200
+[debug] [2025-10-15T01:46:15.302Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ [omitted]
+[debug] [2025-10-15T01:46:15.316Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:46:15.316Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:46:15.326Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:46:15.328Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-15T01:46:15.328Z] > authorizing via signed-in user (princekhan7748@gmail.com)
+[debug] [2025-10-15T01:46:15.345Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:46:15.350Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-15T01:46:15.350Z] > authorizing via signed-in user (princekhan7748@gmail.com)
+[debug] [2025-10-15T01:48:04.034Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:48:04.041Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:48:04.043Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.043Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.044Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.044Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.045Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.045Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.045Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.045Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.045Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.046Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.046Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.046Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.047Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ [none]
+[debug] [2025-10-15T01:48:04.047Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.081Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-10-15T01:48:04.081Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.085Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-10-15T01:48:04.086Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.088Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com [none]
+[debug] [2025-10-15T01:48:04.088Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.089Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-10-15T01:48:04.090Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.091Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com [none]
+[debug] [2025-10-15T01:48:04.091Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.179Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:48:04.181Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:48:04.181Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.181Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.189Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.189Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.189Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.191Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.192Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.192Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.192Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.192Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.195Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.195Z] Checked if tokens are valid: true, expires at: 1760495548541
+[debug] [2025-10-15T01:48:04.195Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ [none]
+[debug] [2025-10-15T01:48:04.195Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.198Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com [none]
+[debug] [2025-10-15T01:48:04.198Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.200Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-10-15T01:48:04.201Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.203Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com [none]
+[debug] [2025-10-15T01:48:04.203Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.205Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com [none]
+[debug] [2025-10-15T01:48:04.205Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:04.207Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com [none]
+[debug] [2025-10-15T01:48:04.208Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com x-goog-quota-user=projects/a-simple-chatapp
+[debug] [2025-10-15T01:48:05.157Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com 403
+[debug] [2025-10-15T01:48:05.157Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com [omitted]
+[debug] [2025-10-15T01:48:05.197Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-10-15T01:48:05.197Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-10-15T01:48:05.198Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-10-15T01:48:05.198Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-10-15T01:48:05.226Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com 200
+[debug] [2025-10-15T01:48:05.232Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-10-15T01:48:05.253Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com 200
+[debug] [2025-10-15T01:48:05.253Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com [omitted]
+[debug] [2025-10-15T01:48:05.262Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com 200
+[debug] [2025-10-15T01:48:05.262Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasedataconnect.googleapis.com [omitted]
+[debug] [2025-10-15T01:48:05.264Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com 200
+[debug] [2025-10-15T01:48:05.264Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebasecrashlytics.googleapis.com [omitted]
+[debug] [2025-10-15T01:48:05.264Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com 403
+[debug] [2025-10-15T01:48:05.265Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseio.com [omitted]
+[debug] [2025-10-15T01:48:05.271Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com 200
+[debug] [2025-10-15T01:48:05.271Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/firebaseapphosting.googleapis.com [omitted]
+[debug] [2025-10-15T01:48:05.295Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com 200
+[debug] [2025-10-15T01:48:05.299Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/cloudfunctions.googleapis.com [omitted]
+[debug] [2025-10-15T01:48:05.419Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ 200
+[debug] [2025-10-15T01:48:05.423Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ [omitted]
+[debug] [2025-10-15T01:48:05.517Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ 200
+[debug] [2025-10-15T01:48:05.517Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/a-simple-chatapp/services/ [omitted]
+[debug] [2025-10-15T01:48:05.518Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:48:05.534Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:48:05.539Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-15T01:48:05.539Z] > authorizing via signed-in user (princekhan7748@gmail.com)
+[debug] [2025-10-15T01:48:05.566Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:48:05.579Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:48:05.593Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:48:05.595Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-15T01:48:05.595Z] > authorizing via signed-in user (princekhan7748@gmail.com)
+[debug] [2025-10-15T01:48:05.631Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"projectId"}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-15T01:48:05.638Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-15T01:48:05.639Z] > authorizing via signed-in user (princekhan7748@gmail.com)

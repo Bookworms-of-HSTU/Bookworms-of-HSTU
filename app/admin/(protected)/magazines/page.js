@@ -1,42 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase'; // Adjust the import path as needed
 import styles from './page.module.css';
 
-const initialMagazines = [
-  {
-    id: 1,
-    title: 'Magazine 1',
-    issue: 1,
-    pdf: '/magazines/magazine1.pdf',
-    image: '/images/placeholder.jpg',
-  },
-  {
-    id: 2,
-    title: 'Magazine 2',
-    issue: 2,
-    pdf: '/magazines/magazine2.pdf',
-    image: '/images/placeholder.jpg',
-  },
-];
-
 export default function Magazines() {
-  const [magazines, setMagazines] = useState(initialMagazines);
+  const [magazines, setMagazines] = useState([]);
   const [newMagazine, setNewMagazine] = useState({ title: '', issue: '', pdf: '', image: '' });
   const [editingMagazine, setEditingMagazine] = useState(null);
+
+  useEffect(() => {
+    const fetchMagazines = async () => {
+      const magazinesCollection = collection(db, 'magazines');
+      const magazinesSnapshot = await getDocs(magazinesCollection);
+      const magazinesList = magazinesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setMagazines(magazinesList);
+    };
+
+    fetchMagazines();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewMagazine({ ...newMagazine, [name]: value });
   };
 
-  const handleAddMagazine = (e) => {
+  const handleAddMagazine = async (e) => {
     e.preventDefault();
-    setMagazines([...magazines, { ...newMagazine, id: Date.now() }]);
+    const docRef = await addDoc(collection(db, 'magazines'), newMagazine);
+    setMagazines([...magazines, { ...newMagazine, id: docRef.id }]);
     setNewMagazine({ title: '', issue: '', pdf: '', image: '' });
   };
 
-  const handleDeleteMagazine = (id) => {
+  const handleDeleteMagazine = async (id) => {
+    await deleteDoc(doc(db, 'magazines', id));
     setMagazines(magazines.filter(magazine => magazine.id !== id));
   };
 
@@ -44,8 +42,10 @@ export default function Magazines() {
     setEditingMagazine(magazine);
   };
 
-  const handleUpdateMagazine = (e) => {
+  const handleUpdateMagazine = async (e) => {
     e.preventDefault();
+    const magazineDoc = doc(db, 'magazines', editingMagazine.id);
+    await updateDoc(magazineDoc, editingMagazine);
     setMagazines(magazines.map(magazine => magazine.id === editingMagazine.id ? editingMagazine : magazine));
     setEditingMagazine(null);
   };

@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import styles from './Messages.module.css';
 
 export default function MessagesPage() {
@@ -10,9 +12,10 @@ export default function MessagesPage() {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const res = await fetch('/api/messages');
-        const data = await res.json();
-        setMessages(data);
+        const messagesCollection = collection(db, 'messages');
+        const messagesSnapshot = await getDocs(messagesCollection);
+        const messagesList = messagesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setMessages(messagesList);
       } catch (error) {
         console.error('Error fetching messages:', error);
       }

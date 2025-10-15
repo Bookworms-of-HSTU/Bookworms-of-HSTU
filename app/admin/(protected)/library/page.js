@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getBooks, addBook, updateBook, deleteBook } from '../../../lib/actions';
+import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import styles from './page.module.css';
 
 export default function LibraryAdmin() {
@@ -18,10 +19,13 @@ export default function LibraryAdmin() {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    async function fetchBooks() {
-      const allBooks = await getBooks();
-      setBooks(allBooks);
-    }
+    const fetchBooks = async () => {
+      const booksCollection = collection(db, 'library');
+      const booksSnapshot = await getDocs(booksCollection);
+      const booksList = booksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setBooks(booksList);
+    };
+
     fetchBooks();
   }, []);
 
@@ -33,12 +37,15 @@ export default function LibraryAdmin() {
 
   const handleSaveBook = async () => {
     if (isEditing) {
-      await updateBook(currentBook);
+      const bookDoc = doc(db, 'library', currentBook.id);
+      await updateDoc(bookDoc, currentBook);
     } else {
-      await addBook(currentBook);
+      await addDoc(collection(db, 'library'), currentBook);
     }
-    const allBooks = await getBooks();
-    setBooks(allBooks);
+    const booksCollection = collection(db, 'library');
+    const booksSnapshot = await getDocs(booksCollection);
+    const booksList = booksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setBooks(booksList);
     closeModal();
   };
 
@@ -49,9 +56,8 @@ export default function LibraryAdmin() {
   };
 
   const handleDelete = async (bookId) => {
-    await deleteBook(bookId);
-    const allBooks = await getBooks();
-    setBooks(allBooks);
+    await deleteDoc(doc(db, 'library', bookId));
+    setBooks(books.filter(book => book.id !== bookId));
   };
 
   const openModal = () => {

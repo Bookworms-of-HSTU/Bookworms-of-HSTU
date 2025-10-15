@@ -2,40 +2,25 @@
 
 import { useState, useEffect } from 'react';
 import styles from './page.module.css';
-
-// Mock data - we will replace this with Firebase fetching later when you're ready
-const mockMagazines = [
-  {
-    id: '1',
-    title: 'Pustok Prohor - 1st Edition',
-    image: '/images/placeholder.jpg', // Using a placeholder image
-    pdf: '#' // Placeholder link
-  },
-  {
-    id: '2',
-    title: 'Pustok Prohor - 2nd Edition',
-    image: '/images/placeholder.jpg', // Using a placeholder image
-    pdf: '#' // Placeholder link
-  },
-    {
-    id: '3',
-    title: 'Pustok Prohor - 3rd Edition',
-    image: '/images/placeholder.jpg', // Using a placeholder image
-    pdf: '#' // Placeholder link
-  },
-];
-
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 export default function MagazinePage() {
   const [magazines, setMagazines] = useState([]);
   const [selectedMagazine, setSelectedMagazine] = useState(null);
 
   useEffect(() => {
-    // We'll use the mock data for now
-    setMagazines(mockMagazines);
-    if (mockMagazines.length > 0) {
-      setSelectedMagazine(mockMagazines[0]);
-    }
+    const fetchMagazines = async () => {
+      const magazinesCollection = collection(db, 'magazines');
+      const magazinesSnapshot = await getDocs(magazinesCollection);
+      const magazinesList = magazinesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setMagazines(magazinesList);
+      if (magazinesList.length > 0) {
+        setSelectedMagazine(magazinesList[0]);
+      }
+    };
+
+    fetchMagazines();
   }, []);
 
   const handleMagazineChange = (e) => {

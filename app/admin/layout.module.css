@@ -7,16 +7,16 @@
 
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
-    padding: 1rem;
+    padding: 0.5rem;
     background-color: #f0f0f0;
-    border-bottom: 1px solid #ccc;
 }
 
 .main {
     flex-grow: 1;
     padding: 1rem;
+    overflow: auto; /* Prevent content from overflowing */
 }
 
 .logoutButton {
@@ -26,6 +26,7 @@
     padding: 0.5rem 1rem;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: auto;
 }
 
 .logoutButton:hover {

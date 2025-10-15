@@ -1,42 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase'; // Adjust the import path as needed
 import styles from './page.module.css';
 
-const initialBlogs = [
-  {
-    id: 1,
-    title: 'Blog Post 1',
-    author: 'Author 1',
-    content: 'Content 1',
-    image: '/images/placeholder.jpg',
-  },
-  {
-    id: 2,
-    title: 'Blog Post 2',
-    author: 'Author 2',
-    content: 'Content 2',
-    image: '/images/placeholder.jpg',
-  },
-];
-
 export default function Blogs() {
-  const [blogs, setBlogs] = useState(initialBlogs);
+  const [blogs, setBlogs] = useState([]);
   const [newBlog, setNewBlog] = useState({ title: '', author: '', content: '', image: '' });
   const [editingBlog, setEditingBlog] = useState(null);
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const blogsCollection = collection(db, 'blogs');
+      const blogsSnapshot = await getDocs(blogsCollection);
+      const blogsList = blogsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setBlogs(blogsList);
+    };
+
+    fetchBlogs();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewBlog({ ...newBlog, [name]: value });
   };
 
-  const handleAddBlog = (e) => {
+  const handleAddBlog = async (e) => {
     e.preventDefault();
-    setBlogs([...blogs, { ...newBlog, id: Date.now() }]);
+    const docRef = await addDoc(collection(db, 'blogs'), newBlog);
+    setBlogs([...blogs, { ...newBlog, id: docRef.id }]);
     setNewBlog({ title: '', author: '', content: '', image: '' });
   };
 
-  const handleDeleteBlog = (id) => {
+  const handleDeleteBlog = async (id) => {
+    await deleteDoc(doc(db, 'blogs', id));
     setBlogs(blogs.filter(blog => blog.id !== id));
   };
 
@@ -44,8 +42,10 @@ export default function Blogs() {
     setEditingBlog(blog);
   };
 
-  const handleUpdateBlog = (e) => {
+  const handleUpdateBlog = async (e) => {
     e.preventDefault();
+    const blogDoc = doc(db, 'blogs', editingBlog.id);
+    await updateDoc(blogDoc, editingBlog);
     setBlogs(blogs.map(blog => blog.id === editingBlog.id ? editingBlog : blog));
     setEditingBlog(null);
   };

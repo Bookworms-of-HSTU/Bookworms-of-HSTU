@@ -1,23 +1,27 @@
 import Image from 'next/image';
 import styles from './page.module.css';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 export const metadata = {
   title: 'About Us',
   description: 'Learn about the mission, vision, and the dedicated team behind the Bookworms of HSTU, the official book club of Hajee Mohammad Danesh Science and Technology University.',
 };
 
-const committees = {
-  'Advisory Committee': [
-    { id: 1, name: 'Dr. Advisor', position: 'Chief Advisor', photo: '/images/placeholder.jpg' },
-  ],
-  'Executive Committee': [
-    { id: 2, name: 'John Doe', position: 'President', photo: '/images/placeholder.jpg' },
-    { id: 3, name: 'Jane Smith', position: 'Vice President', photo: '/images/placeholder.jpg' },
-  ],
-  'Trustee Board': [
-    { id: 4, name: 'Mr. Trustee', position: 'Chairman', photo: '/images/placeholder.jpg' },
-  ],
-};
+async function getCommittees() {
+  const committeesCollection = collection(db, 'committee');
+  const committeesSnapshot = await getDocs(committeesCollection);
+  const committeesList = committeesSnapshot.docs.reduce((acc, doc) => {
+    const data = doc.data();
+    const committeeName = data.committee;
+    if (!acc[committeeName]) {
+      acc[committeeName] = [];
+    }
+    acc[committeeName].push({ id: doc.id, ...data });
+    return acc;
+  }, {});
+  return committeesList;
+}
 
 const organizationSchema = {
   '@context': 'https://schema.org',
@@ -41,7 +45,9 @@ const organizationSchema = {
   }
 };
 
-export default function About() {
+export default async function About() {
+  const committees = await getCommittees();
+
   return (
     <div className={styles.container}>
       <script

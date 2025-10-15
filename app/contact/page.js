@@ -1,29 +1,57 @@
-import styles from './page.module.css';
+'use client';
 
-export const metadata = {
-  title: 'Contact Us',
-  description: 'Get in touch with the Bookworms of HSTU. Send us a message for inquiries, collaborations, or to join our community. We look forward to hearing from you!',
-};
+import { useState } from 'react';
+import styles from './page.module.css';
+import { addContactMessage } from '../lib/actions';
 
 export default function Contact() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newMessage = {
+      name,
+      email,
+      message,
+      date: new Date().toISOString(),
+    };
+
+    try {
+      await addContactMessage(newMessage);
+      setSubmitted(true);
+      setName('');
+      setEmail('');
+      setMessage('');
+    } catch (error) {
+      console.error('Failed to send message:', error);
+    }
+  };
+
   return (
-    <div className={styles.container} data-analytics-section="contact-page">
+    <div className={styles.container}>
       <h1 className={styles.title}>Contact Us</h1>
-      <form className={styles.form} data-analytics-id="contact-form-submission">
-        <div className={styles.formGroup}>
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" name="name" required data-analytics-id="contact-form-name-input" />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" name="email" required data-analytics-id="contact-form-email-input" />
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="message">Message</label>
-          <textarea id="message" name="message" rows="5" required data-analytics-id="contact-form-message-input"></textarea>
-        </div>
-        <button type="submit" className={styles.submitButton} data-analytics-id="contact-form-send-button">Send Message</button>
-      </form>
+      {submitted ? (
+        <p>Thank you for your message! We will get back to you soon.</p>
+      ) : (
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.formGroup}>
+            <label htmlFor="name">Name</label>
+            <input type="text" id="name" name="name" required value={name} onChange={(e) => setName(e.target.value)} />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="email">Email</label>
+            <input type="email" id="email" name="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div className={styles.formGroup}>
+            <label htmlFor="message">Message</label>
+            <textarea id="message" name="message" rows="5" required value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
+          </div>
+          <button type="submit" className={styles.submitButton}>Send Message</button>
+        </form>
+      )}
     </div>
   );
 }
