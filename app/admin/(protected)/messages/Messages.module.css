@@ -1,0 +1,25 @@
+.container {
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.messageList {
+  list-style: none;
+  padding: 0;
+}
+
+.messageItem {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.messageItem h2 {
+  margin-top: 0;
+}

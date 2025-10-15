@@ -1,7 +1,9 @@
+
 'use client';
 
 import { useState } from 'react';
-import { addNotice, updateNotice, deleteNotice } from '@/app/lib/actions';
+import { collection, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 import styles from './NoticeManager.module.css';
 
 export default function NoticeManager({ notices: initialNotices }) {
@@ -12,7 +14,7 @@ export default function NoticeManager({ notices: initialNotices }) {
 
   const handleAddClick = () => {
     setIsEditing(null);
-    setNewNotice({ title: '', content: '', date: '' });
+    setNewNotice({ title: '', content: '', date: new Date().toISOString().split('T')[0] });
     setIsModalOpen(true);
   };
 
@@ -30,18 +32,18 @@ export default function NoticeManager({ notices: initialNotices }) {
 
   const handleSave = async () => {
     if (isEditing) {
-      const updatedNoticeData = { ...newNotice, id: isEditing };
-      const updated = await updateNotice(updatedNoticeData);
-      setNotices(notices.map(notice => notice.id === isEditing ? updated : notice));
+      const noticeRef = doc(db, "notices", isEditing);
+      await updateDoc(noticeRef, newNotice);
+      setNotices(notices.map(notice => (notice.id === isEditing ? { ...newNotice, id: isEditing } : notice)));
     } else {
-      const addedNotice = await addNotice(newNotice);
-      setNotices([...notices, addedNotice]);
+      const docRef = await addDoc(collection(db, "notices"), newNotice);
+      setNotices([...notices, { ...newNotice, id: docRef.id }]);
     }
     handleCancel();
   };
 
   const handleDelete = async (noticeId) => {
-    await deleteNotice(noticeId);
+    await deleteDoc(doc(db, "notices", noticeId));
     setNotices(notices.filter(notice => notice.id !== noticeId));
   };
 

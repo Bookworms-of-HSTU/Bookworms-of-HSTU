@@ -10,7 +10,7 @@ export default function Home() {
           <span className={styles.highlight}>Bookworms of HSTU</span>
         </h1>
         <p className={styles.subtitle}>Your literary journey starts here.</p>
-        <a href="#" className={styles.ctaButton}>Join Us</a>
+        <a href="https://forms.gle/nrLYgj6xuGvMQ7CK7" target="_blank" rel="noopener noreferrer" className={styles.ctaButton}>Join Us</a>
       </div>
       <Newsletter />
     </>

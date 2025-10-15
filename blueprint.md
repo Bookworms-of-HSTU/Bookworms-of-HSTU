@@ -33,67 +33,35 @@ This document outlines the plan for creating an admin panel for the website. The
     *   The navbar background color has been changed to a dark purple (`#3B006A`).
     *   Navigation link colors have been adjusted for better visibility against the new background.
 
-## Current Request: Update Navbar Style
+## Firebase Integration
 
-*   **Goal:** Make the logo bigger and change the navbar color.
+*   **Goal:** Integrate Firebase to provide a robust backend for the application.
+*   **Current Project:** `a-simple-chatapp`
+*   **Previous Project:** `prince-firebase` (decommissioned due to organization policy restrictions)
 *   **Steps:**
-    1.  Increase the logo size in `Navbar.js`. - **Done**
-    2.  Change the navbar background color to `#3B006A` in `Navbar.module.css`. - **Done**
-    3.  Adjust navigation link colors for better contrast. - **Done**
-    4.  Update the `blueprint.md` file to document the changes. - **Done**
+    1.  **Login to Firebase:** Successfully logged into the user's Firebase account.
+    2.  **Switch Project:** Switched to the `a-simple-chatapp` project to bypass security restrictions.
+    3.  **Create Web App:** Created a new web app for the project to get the necessary SDK configuration.
+    4.  **Configure Firebase:** Updated the `lib/firebase.js` file with the new Firebase SDK configuration.
+    5.  **Install SDK:** Installed the `firebase` package using npm.
 
-## Previous Plans
+## Firestore Data Migration
 
-### Add Logo to Navbar
+*   **Goal:** Populate the Firestore database with the existing data from the JSON files.
+*   **Completed:**
+    *   **Notices:** Migrated `notices.json` to a "notices" collection in Firestore. The application now fetches notice data from Firestore.
 
-*   **Goal:** Add the site logo to the navbar and adjust the layout.
-*   **Steps:**
-    1.  Update the `Navbar.js` component to include the logo. - **Done**
-    2.  Update the `Navbar.module.css` to style the logo and adjust link spacing. - **Done**
-    3.  Update the `blueprint.md` file to document the changes. - **Done**
+## Admin Route Refactoring
 
-### Update Public Notices Layout
-
-*   **Goal:** Improve the layout and sorting of the public notices page.
-*   **Steps:**
-    1.  Update the CSS to display notices in a full-width, single-column layout. - **Done**
-    2.  Sort notices by date in descending order. - **Done**
-    3.  Update the `blueprint.md` to reflect these changes. - **Done**
-
-### Fix Notice Manager UI Issues
-
-*   **Goal:** Address UI issues in the notice manager to improve usability.
-*   **Steps:**
-    1.  Make the edit and delete buttons distinguishable with unique hover colors. - **Done**
-    2.  Fix the textfield overflow in the add/edit modal. - **Done**
-    3.  Update the `blueprint.md` file to document these fixes. - **Done**
-
-### Polish Notice Management UI
-
-*   **Goal:** Refine the user interface of the admin's notice management page for a cleaner, more professional look.
-*   **Steps:**
-    1.  Remove the redundant "Manage Notices" title from the main page. - **Done**
-    2.  Enhance the styling of the notice cards with hover effects and improved layout. - **Done**
-    3.  Polish the add/edit modal with a sleeker design. - **Done**
-    4.  Refine the overall typography and spacing for better readability. - **Done**
-    5.  Update the `blueprint.md` to reflect these UI enhancements. - **Done**
-
-### Enhance Notice Management
-
-*   **Goal:** Add a date feature and improve the UI of the notice management system.
-*   **Steps:**
-    1.  Add a `date` field to each notice. - **Done**
-    2.  Update the `NoticeManager` component with a date picker and a more refined, card-based layout. - **Done**
-    3.  Modify the server actions to handle the new `date` field. - **Done**
-    4.  Enhance the public notices page to display the date alongside each notice. - **Done**
-    5.  Update the `blueprint.md` to reflect these changes. - **Done**
-
-### Enhance Gallery with Carousel
-
-*   **Goal:** Enhance the gallery with an interactive carousel.
-*   **Steps:**
-    1.  Create a reusable `Carousel.js` component with navigation and dot indicators. - **Done**
-    2.  Create `Carousel.module.css` for styling. - **Done**
-    3.  Update the `app/gallery/page.js` to use the new `Carousel` component instead of a static grid. - **Done**
-    4.  Run linter to check for issues. - **Done**
-    5.  Update the `blueprint.md` to reflect these changes. - **Done**
+*   **Goal:** Secure the admin panel by moving all admin-related routes to a protected area that requires authentication.
+*   **Implementation:**
+    *   Created a `(protected)` route group within the `app/admin` directory.
+    *   Implemented middleware to check for a valid user session. If a user is not authenticated, they are redirected to the login page.
+*   **Moved Routes:**
+    *   `/admin/committee` -> `/admin/(protected)/committee`
+    *   `/admin/blogs` -> `/admin/(protected)/blogs`
+    *   `/admin/magazines` -> `/admin/(protected)/magazines`
+    *   `/admin/gallery` -> `/admin/(protected)/gallery`
+    *   `/admin/library` -> `/admin/(protected)/library`
+    *   `/admin/notices` -> `/admin/(protected)/notices`
+    *   `/admin/messages` -> `/admin/(protected)/messages`

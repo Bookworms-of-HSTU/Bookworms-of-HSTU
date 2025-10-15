@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getBooks, addBook, updateBook, deleteBook } from '../../lib/actions';
+import { getBooks, addBook, updateBook, deleteBook } from '../../../lib/actions';
 import styles from './page.module.css';
 
 export default function LibraryAdmin() {
