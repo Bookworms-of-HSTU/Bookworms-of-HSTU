@@ -1,17 +1,13 @@
+
 import { NextResponse } from 'next/server';
-import { initializeApp, getApps, cert } from 'firebase-admin/app';
+import { initializeApp, getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 
 function initializeFirebaseAdmin() {
   if (!getApps().length) {
-    const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-    if (!serviceAccountJson) {
-      throw new Error('Firebase Admin SDK initialization error: FIREBASE_SERVICE_ACCOUNT_KEY environment variable is not set.');
-    }
-    const serviceAccount = JSON.parse(serviceAccountJson);
-    initializeApp({
-      credential: cert(serviceAccount)
-    });
+    // When running in a Google Cloud environment like App Hosting,
+    // initializeApp() uses the Application Default Credentials.
+    initializeApp();
   }
 }
 
