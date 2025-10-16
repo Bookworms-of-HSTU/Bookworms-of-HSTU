@@ -15,17 +15,18 @@ if (!admin.apps.length) {
     
     const serviceAccount = JSON.parse(serviceAccountJson);
 
+    // The serviceAccount object itself contains the projectId. 
+    // We do not need to pass it separately.
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
-      // The project ID must be explicitly passed during the build process on Vercel.
-      // We can get this from the client-side public environment variables.
-      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     });
-    console.log("Firebase Admin SDK initialized successfully for server-side operations.");
+
+    console.log("Firebase Admin SDK initialized successfully.");
+
   } catch (error) {
     console.error("Error initializing Firebase Admin SDK:", error);
-    // This will cause the build to fail if the environment variable is not set, which is a good thing.
-    throw new Error("Could not initialize Firebase Admin SDK. Check your FIREBASE_SERVICE_ACCOUNT_BASE64 and NEXT_PUBLIC_FIREBASE_PROJECT_ID environment variables.");
+    // This will cause the build to fail if the environment variable is not set correctly.
+    throw new Error("Could not initialize Firebase Admin SDK. Verify the FIREBASE_SERVICE_ACCOUNT_BASE64 environment variable.");
   }
 }
 
