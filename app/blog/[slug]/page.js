@@ -1,14 +1,15 @@
 import Image from 'next/image';
-import { doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import styles from './page.module.css';
 
 async function getPost(slug) {
-  const docRef = doc(db, "blogs", slug);
-  const docSnap = await getDoc(docRef);
+  const q = query(collection(db, "blogs"), where("slug", "==", slug));
+  const querySnapshot = await getDocs(q);
 
-  if (docSnap.exists()) {
-    return { id: docSnap.id, ...docSnap.data() };
+  if (!querySnapshot.empty) {
+    const doc = querySnapshot.docs[0];
+    return { id: doc.id, ...doc.data() };
   } else {
     return null;
   }
