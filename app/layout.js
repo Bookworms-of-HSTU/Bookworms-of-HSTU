@@ -3,9 +3,7 @@ import Script from 'next/script';
 import Analytics from './components/Analytics';
 import { GA_TRACKING_ID } from './lib/gtag';
 import './globals.css';
-import { headers } from 'next/headers';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import ConditionalLayout from './components/ConditionalLayout';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({ 
@@ -53,10 +51,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const headersList = headers();
-  const pathname = headersList.get('x-next-pathname') || '';
-  const isAdminPage = pathname.startsWith('/admin');
-
   return (
     <html lang="en" className={`${poppins.variable} ${playfairDisplay.variable}`}>
       <head>
@@ -80,9 +74,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <Analytics />
-        {!isAdminPage && <Navbar />}
-        <main>{children}</main>
-        {!isAdminPage && <Footer />}
+        <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
   );
