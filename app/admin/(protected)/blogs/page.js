@@ -5,6 +5,18 @@ import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc } from 'firebase
 import { db } from '@/lib/firebase'; // Adjust the import path as needed
 import styles from './page.module.css';
 
+// Function to generate a URL-friendly slug
+const generateSlug = (title) => {
+  if (!title) return '';
+  return title
+    .toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
+};
+
 export default function Blogs() {
   const [blogs, setBlogs] = useState([]);
   const [newBlog, setNewBlog] = useState({ title: '', author: '', content: '', image: '' });
@@ -28,8 +40,10 @@ export default function Blogs() {
 
   const handleAddBlog = async (e) => {
     e.preventDefault();
-    const docRef = await addDoc(collection(db, 'blogs'), newBlog);
-    setBlogs([...blogs, { ...newBlog, id: docRef.id }]);
+    const slug = generateSlug(newBlog.title);
+    const blogData = { ...newBlog, slug };
+    const docRef = await addDoc(collection(db, 'blogs'), blogData);
+    setBlogs([...blogs, { ...blogData, id: docRef.id }]);
     setNewBlog({ title: '', author: '', content: '', image: '' });
   };
 
@@ -44,9 +58,11 @@ export default function Blogs() {
 
   const handleUpdateBlog = async (e) => {
     e.preventDefault();
+    const slug = generateSlug(editingBlog.title);
+    const blogData = { ...editingBlog, slug };
     const blogDoc = doc(db, 'blogs', editingBlog.id);
-    await updateDoc(blogDoc, editingBlog);
-    setBlogs(blogs.map(blog => blog.id === editingBlog.id ? editingBlog : blog));
+    await updateDoc(blogDoc, blogData);
+    setBlogs(blogs.map(blog => blog.id === editingBlog.id ? blogData : blog));
     setEditingBlog(null);
   };
 
