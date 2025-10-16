@@ -2,10 +2,9 @@
 
 import { promises as fs } from 'fs';
 import path from 'path';
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
-const subscribersFilePath = path.join(process.cwd(), 'lib', 'data', 'subscribers.json');
 const noticesFilePath = path.join(process.cwd(), 'lib', 'data', 'notices.json');
 
 export async function getBooks() {
@@ -31,23 +30,16 @@ export async function deleteBook(bookId) {
   return { success: true };
 }
 
-async function getSubscribers() {
-    try {
-        const data = await fs.readFile(subscribersFilePath, 'utf-8');
-        return JSON.parse(data);
-    } catch (error) {
-        if (error.code === 'ENOENT') {
-            return [];
-        }
-        throw error;
-    }
-}
-
 export async function addSubscriber(email) {
-    const subscribers = await getSubscribers();
-    if (!subscribers.includes(email)) {
-        subscribers.push(email);
-        await fs.writeFile(subscribersFilePath, JSON.stringify(subscribers, null, 2));
+    const subscribersCollection = collection(db, "subscribers");
+    const q = query(subscribersCollection, where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+        await addDoc(subscribersCollection, {
+            email: email,
+            createdAt: new Date()
+        });
     }
     return { success: true };
 }

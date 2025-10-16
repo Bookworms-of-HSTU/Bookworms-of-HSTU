@@ -16,3 +16,6 @@ This is a comprehensive school management system that includes a public-facing w
 - **Notices**: The notices page now includes a "Load More" button to load and display older notices and news items.
 - **Gallery**: The gallery has been enhanced with a "Load More" button to progressively load and display more image galleries.
 - **Library**: The library page now has a "Load More" button to fetch and display more books from the collection.
+
+### Newsletter Subscription
+- **Firestore Integration**: The newsletter subscription functionality has been refactored to use a secure `subscribers` collection in the Firestore database, replacing the previous file-based storage system. This ensures scalability, data integrity, and enhanced security for subscriber information.

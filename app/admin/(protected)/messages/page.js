@@ -39,7 +39,12 @@ export default function MessagesPage() {
         setAllMessagesLoaded(true);
       }
 
-      setMessages(prevMessages => [...prevMessages, ...newMessages]);
+      setMessages(prevMessages => {
+        const messageIds = new Set(prevMessages.map(m => m.id));
+        const uniqueNewMessages = newMessages.filter(m => !messageIds.has(m.id));
+        return [...prevMessages, ...uniqueNewMessages];
+      });
+
       if (messagesSnapshot.docs.length > 0) {
         setLastVisible(messagesSnapshot.docs[messagesSnapshot.docs.length - 1]);
       }
@@ -51,8 +56,10 @@ export default function MessagesPage() {
   }, [allMessagesLoaded]);
 
   useEffect(() => {
-    fetchMessages();
-  }, [fetchMessages]);
+    if (messages.length === 0) {
+      fetchMessages();
+    }
+  }, [fetchMessages, messages.length]);
 
   return (
     <div className={styles.container}>
