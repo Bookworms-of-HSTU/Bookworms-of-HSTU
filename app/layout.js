@@ -1,6 +1,7 @@
 import { Inter, Poppins, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
-import Analytics from './components/Analytics';
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react'; // Renamed to avoid conflict
+import GoogleAnalytics from './components/Analytics'; // Renamed for clarity
 import { GA_TRACKING_ID } from './lib/gtag';
 import './globals.css';
 import ConditionalLayout from './components/ConditionalLayout';
@@ -16,8 +17,13 @@ const playfairDisplay = Playfair_Display({
   variable: '--font-playfair-display' 
 });
 
+// Use VERCEL_URL to create a dynamic base URL
+const siteUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : 'http://localhost:3000';
+
 export const metadata = {
-  metadataBase: new URL('https://bookworms-of-hstu.vercel.app'),
+  metadataBase: new URL(siteUrl), // Using the dynamic URL
   title: {
     template: '%s | Bookworms of HSTU',
     default: 'Bookworms of HSTU - Official Website',
@@ -30,7 +36,7 @@ export const metadata = {
   openGraph: {
     title: 'Bookworms of HSTU - Official Website',
     description: 'The official website for the Bookworms of HSTU, a student book club at Hajee Mohammad Danesh Science and Technology University.',
-    url: 'https://bookworms-of-hstu.vercel.app',
+    url: siteUrl, // Using the dynamic URL
     siteName: 'Bookworms of HSTU',
     images: [
       {
@@ -73,8 +79,9 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <Analytics />
+        <GoogleAnalytics /> 
         <ConditionalLayout>{children}</ConditionalLayout>
+        <VercelAnalytics /> 
       </body>
     </html>
   );

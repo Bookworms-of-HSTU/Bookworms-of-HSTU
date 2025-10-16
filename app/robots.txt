@@ -1,5 +1,8 @@
+# See https://www.robotstxt.org/robotstxt.html for documentation on how to write a robots.txt file
+
 User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://bookworms-of-hstu.vercel.app/sitemap.js
+# Point to the dynamically generated sitemap
+Sitemap: https://bookworms-of-hstu-1.vercel.app/sitemap.xml
