@@ -1,8 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { getBooks } from '../lib/actions';
 import styles from './page.module.css';
+import { collection, getDocs, query, orderBy, limit, startAfter } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+
+const BOOKS_PER_PAGE = 10;
 
 const BookCard = ({ book }) => {
   return (
@@ -24,12 +27,45 @@ const BookCard = ({ book }) => {
 
 export default function Library() {
   const [books, setBooks] = useState([]);
+  const [lastVisible, setLastVisible] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [allBooksLoaded, setAllBooksLoaded] = useState(false);
+
+  const fetchBooks = async (after = null) => {
+    setLoading(true);
+    try {
+      let booksQuery = query(
+        collection(db, "library"),
+        orderBy("title"),
+        limit(BOOKS_PER_PAGE)
+      );
+
+      if (after) {
+        booksQuery = query(
+          collection(db, "library"),
+          orderBy("title"),
+          startAfter(after),
+          limit(BOOKS_PER_PAGE)
+        );
+      }
+
+      const booksSnapshot = await getDocs(booksQuery);
+      const newBooks = booksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+      if (newBooks.length < BOOKS_PER_PAGE) {
+        setAllBooksLoaded(true);
+      }
+
+      setBooks(prevBooks => [...prevBooks, ...newBooks]);
+      setLastVisible(booksSnapshot.docs[booksSnapshot.docs.length - 1]);
+    } catch (error) {
+      console.error("Error fetching books: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    async function fetchBooks() {
-      const allBooks = await getBooks();
-      setBooks(allBooks);
-    }
     fetchBooks();
   }, []);
 
@@ -37,10 +73,17 @@ export default function Library() {
     <div className={styles.container}>
       <h1 className={styles.title}>Library</h1>
       <div className={styles.bookGrid}>
-        {books.map((book) => (
-          <BookCard key={book.id} book={book} />
+        {books.filter(book => book.id).map((book) => (
+          <BookCard key={book.id || Math.random()} book={book} />
         ))}
       </div>
+      {!allBooksLoaded && (
+        <div className={styles.loadMoreContainer}>
+          <button onClick={() => fetchBooks(lastVisible)} disabled={loading} className={styles.loadMoreButton}>
+            {loading ? 'Loading...' : 'Load More'}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

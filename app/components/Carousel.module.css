@@ -11,6 +11,7 @@
     max-width: 800px;
     overflow: hidden;
     border-radius: 10px;
+    border: 1px solid #eaeaea;
   }
   
   .image {
@@ -23,9 +24,9 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
+    background-color: white;
+    color: #333;
+    border: 1px solid #eaeaea;
     padding: 10px;
     cursor: pointer;
     z-index: 1;
@@ -35,6 +36,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .navButton:hover {
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
   .prevButton {
@@ -47,22 +55,27 @@
   
   .dots {
     position: absolute;
-    bottom: 10px;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
   }
   
   .dot {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5);
-    margin: 0 5px;
+    background-color: rgba(0, 0, 0, 0.3);
+    margin: 0 6px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .dot:hover {
+    background-color: rgba(0, 0, 0, 0.5);
   }
   
   .activeDot {
-    background-color: white;
+    background-color: #333;
   }
   

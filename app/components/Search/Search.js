@@ -7,7 +7,10 @@ import { InstantSearch, SearchBox, Hits, Highlight, Snippet, useInstantSearch } 
 import styles from './Search.module.css';
 
 // Initialize the Algolia search client
-const searchClient = algoliasearch('B648Y72B28', '20745e223a23d5ec42a80e1de5599299');
+const searchClient = algoliasearch(
+  process.env.NEXT_PUBLIC_ALGOLIA_APP_ID,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY
+);
 
 // This is the component that will be rendered for each search result (a "hit")
 const Hit = ({ hit }) => {

@@ -1,0 +1,57 @@
+.container {
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+.messageList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.messageCard {
+  background-color: var(--background-light);
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-elevation-medium);
+  border-left: 5px solid var(--primary-color);
+}
+
+.messageCard p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.messageCard strong {
+  color: var(--text-secondary);
+}
+
+.loadMoreContainer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.loadMoreButton {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loadMoreButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.loadMoreButton:hover:not(:disabled) {
+  background-color: var(--primary-color-dark);
+}

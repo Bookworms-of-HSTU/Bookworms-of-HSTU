@@ -1,25 +1,71 @@
 .container {
   padding: 2rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 2rem;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
 }
 
 .messageList {
-  list-style: none;
-  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
 }
 
-.messageItem {
-  background: #f9f9f9;
-  border: 1px solid #ddd;
+.messageCard {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-left: 5px solid #0070f3;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.messageCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.messageCard p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+  color: #555;
+}
+
+.messageCard strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.loadMoreContainer {
+  text-align: center;
+  margin-top: 2.5rem;
+}
+
+.loadMoreButton {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
   border-radius: 5px;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.messageItem h2 {
-  margin-top: 0;
+.loadMoreButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.loadMoreButton:hover:not(:disabled) {
+  background-color: #555;
+  transform: translateY(-2px);
 }
