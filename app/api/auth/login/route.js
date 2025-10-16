@@ -1,12 +1,15 @@
 import { NextResponse } from 'next/server';
 import { getAuth } from 'firebase-admin/auth';
-// By importing this, we ensure the Firebase Admin app is initialized correctly.
-import '../../../../lib/firebase/server';
+// Import the new function to lazily initialize the Admin SDK
+import { getAdminDb } from '../../../../lib/firebase/server';
 
 export async function POST(request) {
   const { idToken } = await request.json();
 
   try {
+    // Ensure the Firebase Admin app is initialized before using getAuth().
+    getAdminDb();
+
     // Verify the ID token and check for the 'admin' custom claim.
     const decodedToken = await getAuth().verifyIdToken(idToken);
     
