@@ -65,7 +65,7 @@ export default function Library() {
 
   useEffect(() => {
     fetchBooks();
-  }, []);
+  }, [books]);
 
   return (
     <div className={styles.container}>

@@ -21,7 +21,7 @@ export default function MagazinePage() {
     };
 
     fetchMagazines();
-  }, []);
+  }, [magazines]);
 
   const handleMagazineChange = (e) => {
     const magazineId = e.target.value;

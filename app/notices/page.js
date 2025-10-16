@@ -49,7 +49,7 @@ export default function NoticesPage() {
 
   useEffect(() => {
     fetchNotices();
-  }, []);
+  }, [notices]);
 
   return (
     <div className={styles.noticesPage}>
