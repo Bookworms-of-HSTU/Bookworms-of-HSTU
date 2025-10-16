@@ -19,6 +19,7 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata = {
+  metadataBase: new URL('https://bookworms-of-hstu.vercel.app'),
   title: {
     template: '%s | Bookworms of HSTU',
     default: 'Bookworms of HSTU - Official Website',
@@ -27,6 +28,27 @@ export const metadata = {
   keywords: ['Bookworms of HSTU', 'HSTU book club', 'reading club', 'student organization', 'Hajee Mohammad Danesh Science and Technology University', 'book club website'],
   icons: {
     icon: '/logo.png',
+  },
+  openGraph: {
+    title: 'Bookworms of HSTU - Official Website',
+    description: 'The official website for the Bookworms of HSTU, a student book club at Hajee Mohammad Danesh Science and Technology University.',
+    url: 'https://bookworms-of-hstu.vercel.app',
+    siteName: 'Bookworms of HSTU',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bookworms of HSTU - Official Website',
+    description: 'The official website for the Bookworms of HSTU, a student book club at Hajee Mohammad Danesh Science and Technology University.',
+    images: ['/og-image.png'],
   },
 };
 

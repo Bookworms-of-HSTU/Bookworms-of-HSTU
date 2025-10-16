@@ -19,3 +19,10 @@ This is a comprehensive school management system that includes a public-facing w
 
 ### Newsletter Subscription
 - **Firestore Integration**: The newsletter subscription functionality has been refactored to use a secure `subscribers` collection in the Firestore database, replacing the previous file-based storage system. This ensures scalability, data integrity, and enhanced security for subscriber information.
+
+## Bug Fixes
+
+### Duplicate Key Error
+- **Affected Pages:** Gallery, Library, Notices
+- **Problem:** A recurring "duplicate key" error was causing data-loading issues on several pages. This was due to React's Strict Mode in development, which caused the initial data to be fetched and rendered twice.
+- **Solution:** The data-fetching logic on the affected pages has been updated to be more resilient. The initial data load now **replaces** the existing content, while subsequent "Load More" clicks **append** new data. This prevents duplicate items from being rendered and resolves the error.

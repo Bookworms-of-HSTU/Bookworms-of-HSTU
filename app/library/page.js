@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import { collection, getDocs, query, orderBy, limit, startAfter } from 'firebase/firestore';
+import { collection, getDocs, query, limit, startAfter } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 const BOOKS_PER_PAGE = 10;
@@ -36,27 +36,25 @@ export default function Library() {
     try {
       let booksQuery = query(
         collection(db, "library"),
-        orderBy("title"),
         limit(BOOKS_PER_PAGE)
       );
 
       if (after) {
         booksQuery = query(
           collection(db, "library"),
-          orderBy("title"),
           startAfter(after),
           limit(BOOKS_PER_PAGE)
         );
       }
 
       const booksSnapshot = await getDocs(booksQuery);
-      const newBooks = booksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const newBooks = booksSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 
       if (newBooks.length < BOOKS_PER_PAGE) {
         setAllBooksLoaded(true);
       }
 
-      setBooks(prevBooks => [...prevBooks, ...newBooks]);
+      setBooks(prevBooks => (after ? [...prevBooks, ...newBooks] : newBooks));
       setLastVisible(booksSnapshot.docs[booksSnapshot.docs.length - 1]);
     } catch (error) {
       console.error("Error fetching books: ", error);

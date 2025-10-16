@@ -39,7 +39,7 @@ export default function Gallery() {
         setAllEventsLoaded(true);
       }
 
-      setEvents(prevEvents => [...prevEvents, ...newEvents]);
+      setEvents(prevEvents => (after ? [...prevEvents, ...newEvents] : newEvents));
       setLastVisible(eventsSnapshot.docs[eventsSnapshot.docs.length - 1]);
     } catch (error) {
       console.error("Error fetching events: ", error);

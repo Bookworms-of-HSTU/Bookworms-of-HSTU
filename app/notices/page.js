@@ -32,13 +32,13 @@ export default function NoticesPage() {
       }
 
       const noticeSnapshot = await getDocs(noticesQuery);
-      const newNotices = noticeSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const newNotices = noticeSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 
       if (newNotices.length < NOTICES_PER_PAGE) {
         setAllNoticesLoaded(true);
       }
 
-      setNotices(prevNotices => [...prevNotices, ...newNotices]);
+      setNotices(prevNotices => (after ? [...prevNotices, ...newNotices] : newNotices));
       setLastVisible(noticeSnapshot.docs[noticeSnapshot.docs.length - 1]);
     } catch (error) {
       console.error("Error fetching notices: ", error);
