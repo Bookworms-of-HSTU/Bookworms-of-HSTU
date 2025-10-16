@@ -1,4 +1,5 @@
-import admin from 'firebase-admin';
+
+import admin from "firebase-admin";
 
 // This file is for server-side code only.
 
@@ -16,12 +17,15 @@ if (!admin.apps.length) {
 
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
+      // The project ID must be explicitly passed during the build process on Vercel.
+      // We can get this from the client-side public environment variables.
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
     });
     console.log("Firebase Admin SDK initialized successfully for server-side operations.");
   } catch (error) {
     console.error("Error initializing Firebase Admin SDK:", error);
     // This will cause the build to fail if the environment variable is not set, which is a good thing.
-    throw new Error("Could not initialize Firebase Admin SDK. Check your FIREBASE_SERVICE_ACCOUNT_BASE64 environment variable.");
+    throw new Error("Could not initialize Firebase Admin SDK. Check your FIREBASE_SERVICE_ACCOUNT_BASE64 and NEXT_PUBLIC_FIREBASE_PROJECT_ID environment variables.");
   }
 }
 
