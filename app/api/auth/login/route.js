@@ -1,28 +1,21 @@
 import { NextResponse } from 'next/server';
-import { getAuth } from 'firebase-admin/auth';
-// Import the new function to lazily initialize the Admin SDK
-import { getAdminDb } from '../../../../lib/firebase/server';
+// Import the new, guaranteed-to-be-initialized adminAuth object
+import { adminAuth } from '../../../../lib/firebase/server';
 
 export async function POST(request) {
   const { idToken } = await request.json();
 
   try {
-    // Ensure the Firebase Admin app is initialized before using getAuth().
-    getAdminDb();
-
-    // Verify the ID token and check for the 'admin' custom claim.
-    const decodedToken = await getAuth().verifyIdToken(idToken);
+    // Verify the ID token using the new adminAuth object.
+    const decodedToken = await adminAuth.verifyIdToken(idToken);
     
     if (decodedToken.admin !== true) {
-      // The user is not an admin, so they are not authorized.
       return NextResponse.json({ error: 'You are not authorized to access this page.' }, { status: 403 });
     }
 
-    // The user is a verified admin, now create a session cookie.
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
-    const sessionCookie = await getAuth().createSessionCookie(idToken, { expiresIn });
+    const sessionCookie = await adminAuth.createSessionCookie(idToken, { expiresIn });
 
-    // Set cookie on the response and send it back.
     const response = NextResponse.json({ status: 'success' }, { status: 200 });
     response.cookies.set('session', sessionCookie, {
       httpOnly: true,
@@ -34,7 +27,11 @@ export async function POST(request) {
     return response;
   } catch (error) {
     console.error('Login API Error:', error);
-    // Handle cases where the token is invalid or expired
+    // The new logic in server.js will throw a specific error if the config is wrong.
+    // We can now provide a much better error message to the user.
+    if (error.message.startsWith('CRITICAL_ERROR')) {
+        return NextResponse.json({ error: 'Server configuration error. Please contact support.' }, { status: 500 });
+    }
     if (error.code === 'auth/id-token-expired' || error.code === 'auth/argument-error') {
         return NextResponse.json({ error: 'Invalid session. Please log in again.' }, { status: 401 });
     }
