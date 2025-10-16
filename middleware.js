@@ -1,52 +1,41 @@
-
 import { NextResponse } from 'next/server';
-import { initializeApp, getApps } from 'firebase-admin/app';
-import { getAuth } from 'firebase-admin/auth';
 
-function initializeFirebaseAdmin() {
-  if (!getApps().length) {
-    // When running in a Google Cloud environment like App Hosting,
-    // initializeApp() uses the Application Default Credentials.
-    initializeApp();
+export function middleware(request) {
+  const sessionCookie = request.cookies.get('session');
+  const { pathname } = request.nextUrl;
+
+  // If the user is trying to access the admin area without a session, redirect to login
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/login') && !sessionCookie) {
+    return NextResponse.redirect(new URL('/admin/login', request.url));
   }
+
+  // If the user is logged in and tries to access the login page, redirect to the admin dashboard
+  if (pathname.startsWith('/admin/login') && sessionCookie) {
+    return NextResponse.redirect(new URL('/admin', request.url));
+  }
+
+  // Clone the request headers and set a new header `x-next-pathname`
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-next-pathname', pathname);
+
+  // Return the response with the modified headers
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
-
-export async function middleware(request) {
-  initializeFirebaseAdmin();
-
-  const session = request.cookies.get('session')?.value || '';
-
-  // If no session cookie, redirect to login for protected admin routes
-  if (!session) {
-    if (request.nextUrl.pathname.startsWith('/admin') && request.nextUrl.pathname !== '/admin/login') {
-        return NextResponse.redirect(new URL('/admin/login', request.url));
-    }
-    return NextResponse.next();
-  }
-
-  try {
-    // Verify the session cookie.
-    await getAuth().verifySessionCookie(session, true /** checkRevoked */);
-
-    // If trying to access login page while logged in, redirect to admin dashboard
-    if (request.nextUrl.pathname === '/admin/login') {
-      return NextResponse.redirect(new URL('/admin', request.url));
-    }
-
-    return NextResponse.next();
-
-  } catch (error) {
-    // Session cookie is invalid, clear it and redirect to login
-    console.error('Session verification error:', error.message);
-    const response = NextResponse.redirect(new URL('/admin/login', request.url));
-    response.cookies.delete('session');
-    return response;
-  }
-}
-
-// Force middleware to run on Node.js runtime
-export const runtime = 'nodejs';
 
 export const config = {
-    matcher: ['/admin/:path*', '/admin/login']
-}
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - logo.png
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|logo.png).*)',
+  ],
+};

@@ -22,14 +22,24 @@ export default async function Post({ params }) {
   }
 
   return (
-    <div className={styles.container}>
-      <Image src={post.image} alt={post.title} className={styles.image} width={800} height={400} />
-      <h1 className={styles.title}>{post.title}</h1>
-      <div className={styles.date}>{post.date}</div>
-      <div
-        className={styles.content}
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
+    <div>
+      <div style={{ position: 'relative', width: '100%', height: '50vh' }}>
+        <Image 
+          src={post.image} 
+          alt={post.title} 
+          className={styles.image} 
+          fill 
+          style={{ objectFit: 'cover' }}
+        />
+      </div>
+      <div className={styles.container}>
+        <h1 className={styles.title}>{post.title}</h1>
+        <div className={styles.date}>{post.date}</div>
+        <div
+          className={styles.content}
+          dangerouslySetInnerHTML={{ __html: post.content }}
+        />
+      </div>
     </div>
   );
 }

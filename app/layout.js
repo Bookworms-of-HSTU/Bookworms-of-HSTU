@@ -1,10 +1,11 @@
 import { Inter, Poppins, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import Analytics from './components/Analytics';
 import { GA_TRACKING_ID } from './lib/gtag';
 import './globals.css';
+import { headers } from 'next/headers';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({ 
@@ -24,9 +25,16 @@ export const metadata = {
   },
   description: 'The official website for the Bookworms of HSTU, a student book club at Hajee Mohammad Danesh Science and Technology University. Explore our library, blog, events, and more.',
   keywords: ['Bookworms of HSTU', 'HSTU book club', 'reading club', 'student organization', 'Hajee Mohammad Danesh Science and Technology University', 'book club website'],
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 export default function RootLayout({ children }) {
+  const headersList = headers();
+  const pathname = headersList.get('x-next-pathname') || '';
+  const isAdminPage = pathname.startsWith('/admin');
+
   return (
     <html lang="en" className={`${poppins.variable} ${playfairDisplay.variable}`}>
       <head>
@@ -50,9 +58,9 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <Analytics />
-        <Navbar />
+        {!isAdminPage && <Navbar />}
         <main>{children}</main>
-        <Footer />
+        {!isAdminPage && <Footer />}
       </body>
     </html>
   );
