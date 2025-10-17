@@ -5,8 +5,6 @@ import GoogleAnalytics from './components/Analytics'; // Renamed for clarity
 import { GA_TRACKING_ID } from './lib/gtag';
 import './globals.css';
 import ConditionalLayout from './components/ConditionalLayout';
-import { SpeedInsights } from '@vercel/speed-insights/next'; // Import Speed Insights
-
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({ 
@@ -42,9 +40,9 @@ export const metadata = {
     siteName: 'Bookworms of HSTU',
     images: [
       {
-        url: '/logo.png',
-        width: 500, // Explicitly setting the width
-        height: 500, // Explicitly setting the height
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
       },
     ],
     locale: 'en_US',
@@ -54,7 +52,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Bookworms of HSTU - Official Website',
     description: 'The official website for the Bookworms of HSTU, a student book club at Hajee Mohammad Danesh Science and Technology University.',
-    images: ['/logo.png'],
+    images: ['/og-image.jpg'],
   },
 };
 
@@ -84,7 +82,6 @@ export default function RootLayout({ children }) {
         <GoogleAnalytics /> 
         <ConditionalLayout>{children}</ConditionalLayout>
         <VercelAnalytics /> 
-        <SpeedInsights /> {/* Add Speed Insights component */}
       </body>
     </html>
   );
