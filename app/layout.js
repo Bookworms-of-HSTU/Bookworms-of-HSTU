@@ -40,7 +40,7 @@ export const metadata = {
     siteName: 'Bookworms of HSTU',
     images: [
       {
-        url: '/og-image.png',
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
       },
@@ -52,7 +52,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Bookworms of HSTU - Official Website',
     description: 'The official website for the Bookworms of HSTU, a student book club at Hajee Mohammad Danesh Science and Technology University.',
-    images: ['/og-image.png'],
+    images: ['/og-image.jpg'],
   },
 };
 
