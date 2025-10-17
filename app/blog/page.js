@@ -1,12 +1,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+// Switch to the server-side admin SDK
+import { adminFirestore } from "@/lib/firebase/server";
+
+// This line ensures the page is never cached and always fetches fresh data.
+export const dynamic = 'force-dynamic';
 
 async function getPosts() {
-  const postsCollection = collection(db, "blogs");
-  const postsSnapshot = await getDocs(postsCollection);
+  // Use the correct adminFirestore to get data
+  const postsCollection = adminFirestore.collection("blogs");
+  const postsSnapshot = await postsCollection.get();
   const posts = postsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   return posts;
 }
@@ -19,6 +23,7 @@ export default async function Blog() {
       <h1 className={styles.title}>Our Blog</h1>
       <div className={styles.grid}>
         {posts.map((post) => (
+          // The link is correct, using post.slug
           <Link href={`/blog/${post.slug}`} key={post.slug} className={styles.card}>
             <Image src={post.image} alt={post.title} className={styles.cardImage} width={400} height={200} />
             <div className={styles.cardContent}>
