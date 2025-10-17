@@ -8,24 +8,44 @@ async function getPost(slug) {
   const querySnapshot = await postsRef.get();
 
   if (querySnapshot.empty) {
-    return null;
+    return { post: null, availableSlugs: [] };
   }
 
-  // Find the post by comparing the lowercase slug, making the match case-insensitive.
+  const allSlugs = querySnapshot.docs.map(doc => doc.data().slug);
   const postDoc = querySnapshot.docs.find(doc => doc.data().slug.toLowerCase() === decodedSlug);
 
   if (postDoc) {
-    return { id: postDoc.id, ...postDoc.data() };
+    return { post: { id: postDoc.id, ...postDoc.data() }, availableSlugs: null };
   } else {
-    return null;
+    // If post is not found, return all available slugs for diagnostics
+    return { post: null, availableSlugs: allSlugs };
   }
 }
 
 export default async function Post({ params }) {
-  const post = await getPost(params.slug);
+  const { post, availableSlugs } = await getPost(params.slug);
 
   if (!post) {
-    return <div>Post not found</div>;
+    return (
+      <div style={{ padding: '2rem' }}>
+        <h1>Post Not Found</h1>
+        <p>We could not find a post with the requested identifier.</p>
+        <hr />
+        <h2>Diagnostic Information</h2>
+        <p>This information will help us solve the problem.</p>
+        <p><b>Requested Slug from URL:</b> {params.slug}</p>
+        <p><b>Available Slugs in Database:</b></p>
+        {availableSlugs && availableSlugs.length > 0 ? (
+          <ul style={{ background: '#f0f0f0', padding: '1rem' }}>
+            {availableSlugs.map((s, index) => (
+              <li key={index}><code>{s}</code></li>
+            ))}
+          </ul>
+        ) : (
+          <p style={{ color: 'red' }}>Could not retrieve any slugs from the database.</p>
+        )}
+      </div>
+    );
   }
 
   return (
