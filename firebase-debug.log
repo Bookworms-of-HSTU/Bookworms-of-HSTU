@@ -1169,3 +1169,40 @@
 [error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
 [debug] [2025-10-17T04:20:16.782Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
 [debug] [2025-10-17T04:20:16.782Z] > authorizing via signed-in user (princekhan7748@gmail.com)
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-17T05:50:37.187Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-17T05:50:37.192Z] > authorizing via signed-in user (princekhan7748@gmail.com)
+[debug] [2025-10-17T05:50:37.340Z] Checked if tokens are valid: false, expires at: 1760678227820
+[debug] [2025-10-17T05:50:37.340Z] Checked if tokens are valid: false, expires at: 1760678227820
+[debug] [2025-10-17T05:50:37.343Z] > refreshing access token with scopes: []
+[debug] [2025-10-17T05:50:37.353Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-17T05:50:37.354Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-17T05:50:37.432Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-17T05:50:37.435Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-17T05:50:37.498Z] >>> [apiv2][query] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query [none]
+[debug] [2025-10-17T05:50:37.498Z] >>> [apiv2][body] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query {"expression":[{"email":"bookwormsofhstu@gmail.com"}],"limit":"1"}
+[debug] [2025-10-17T05:50:37.768Z] <<< [apiv2][status] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query 200
+[debug] [2025-10-17T05:50:37.775Z] <<< [apiv2][body] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query {"recordsCount":"1","userInfo":[{"localId":"fvisylwPUANY4cq02s8MSfLKcJH2","email":"bookwormsofhstu@gmail.com","passwordHash":"UkVEQUNURUQ=","emailVerified":false,"passwordUpdatedAt":1760680074764,"providerUserInfo":[{"providerId":"password","federatedId":"bookwormsofhstu@gmail.com","email":"bookwormsofhstu@gmail.com","rawId":"bookwormsofhstu@gmail.com"}],"validSince":"1760680074","disabled":false,"lastLoginAt":"1760680121055","createdAt":"1760680074764","lastRefreshAt":"2025-10-17T05:48:41.055Z"}]}
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[error] Failed to fetch Firebase Project from Studio Workspace because WORKSPACE_SLUG environment variable is empty
+[debug] [2025-10-17T05:51:16.483Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/userinfo.email"]
+[debug] [2025-10-17T05:51:16.483Z] > authorizing via signed-in user (princekhan7748@gmail.com)
+[debug] [2025-10-17T05:51:16.492Z] Checked if tokens are valid: true, expires at: 1760683836436
+[debug] [2025-10-17T05:51:16.492Z] Checked if tokens are valid: true, expires at: 1760683836436
+[debug] [2025-10-17T05:51:16.492Z] >>> [apiv2][query] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query [none]
+[debug] [2025-10-17T05:51:16.493Z] >>> [apiv2][body] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query {"expression":[{"userId":"fvisylwPUANY4cq02s8MSfLKcJH2"}],"limit":"1"}
+[debug] [2025-10-17T05:51:16.747Z] <<< [apiv2][status] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query 200
+[debug] [2025-10-17T05:51:16.749Z] <<< [apiv2][body] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query {"recordsCount":"1","userInfo":[{"localId":"fvisylwPUANY4cq02s8MSfLKcJH2","email":"bookwormsofhstu@gmail.com","passwordHash":"UkVEQUNURUQ=","emailVerified":false,"passwordUpdatedAt":1760680074764,"providerUserInfo":[{"providerId":"password","federatedId":"bookwormsofhstu@gmail.com","email":"bookwormsofhstu@gmail.com","rawId":"bookwormsofhstu@gmail.com"}],"validSince":"1760680074","disabled":false,"lastLoginAt":"1760680121055","createdAt":"1760680074764","lastRefreshAt":"2025-10-17T05:48:41.055Z"}]}
+[debug] [2025-10-17T05:51:16.751Z] Checked if tokens are valid: true, expires at: 1760683836436
+[debug] [2025-10-17T05:51:16.751Z] Checked if tokens are valid: true, expires at: 1760683836436
+[debug] [2025-10-17T05:51:16.752Z] >>> [apiv2][query] POST https://identitytoolkit.googleapis.com/v1/accounts:update [none]
+[debug] [2025-10-17T05:51:16.752Z] >>> [apiv2][body] POST https://identitytoolkit.googleapis.com/v1/accounts:update {"customAttributes":"{\"admin\":true}","targetProjectId":"bookworms-of-hstu","localId":"fvisylwPUANY4cq02s8MSfLKcJH2"}
+[debug] [2025-10-17T05:51:17.230Z] <<< [apiv2][status] POST https://identitytoolkit.googleapis.com/v1/accounts:update 200
+[debug] [2025-10-17T05:51:17.234Z] <<< [apiv2][body] POST https://identitytoolkit.googleapis.com/v1/accounts:update {"kind":"identitytoolkit#SetAccountInfoResponse","localId":"fvisylwPUANY4cq02s8MSfLKcJH2","email":"bookwormsofhstu@gmail.com","providerUserInfo":[{"providerId":"password","federatedId":"bookwormsofhstu@gmail.com","email":"bookwormsofhstu@gmail.com","rawId":"bookwormsofhstu@gmail.com"}],"passwordHash":"UkVEQUNURUQ=","emailVerified":false}
+[debug] [2025-10-17T05:51:17.234Z] Checked if tokens are valid: true, expires at: 1760683836436
+[debug] [2025-10-17T05:51:17.234Z] Checked if tokens are valid: true, expires at: 1760683836436
+[debug] [2025-10-17T05:51:17.234Z] >>> [apiv2][query] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query [none]
+[debug] [2025-10-17T05:51:17.234Z] >>> [apiv2][body] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query {"expression":[{"userId":"fvisylwPUANY4cq02s8MSfLKcJH2"}],"limit":"1"}
+[debug] [2025-10-17T05:51:17.491Z] <<< [apiv2][status] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query 200
+[debug] [2025-10-17T05:51:17.491Z] <<< [apiv2][body] POST https://identitytoolkit.googleapis.com/v1/projects/bookworms-of-hstu/accounts:query {"recordsCount":"1","userInfo":[{"localId":"fvisylwPUANY4cq02s8MSfLKcJH2","email":"bookwormsofhstu@gmail.com","passwordHash":"UkVEQUNURUQ=","emailVerified":false,"passwordUpdatedAt":1760680074764,"providerUserInfo":[{"providerId":"password","federatedId":"bookwormsofhstu@gmail.com","email":"bookwormsofhstu@gmail.com","rawId":"bookwormsofhstu@gmail.com"}],"validSince":"1760680074","disabled":false,"lastLoginAt":"1760680121055","createdAt":"1760680074764","customAttributes":"{\"admin\":true}","lastRefreshAt":"2025-10-17T05:48:41.055Z"}]}
