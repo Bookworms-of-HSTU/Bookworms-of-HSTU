@@ -11,7 +11,7 @@
 }
 
 .highlight {
-    color: #007bff;
+    color: #94000E;
 }
 
 .subtitle {
@@ -22,7 +22,7 @@
 
 .ctaButton {
     display: inline-block;
-    background-color: #007bff;
+    background-color: #3B006A; /* Changed from blue */
     color: white;
     padding: 1rem 2rem;
     border-radius: 5px;
@@ -32,5 +32,5 @@
 }
 
 .ctaButton:hover {
-    background-color: #0056b3;
+    background-color: #2a004a; /* Darker shade of the new color */
 }
