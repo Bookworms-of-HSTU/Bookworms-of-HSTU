@@ -9,19 +9,16 @@
 .container {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Pushes the two main groups apart */
-  flex-wrap: nowrap; /* THE CRITICAL FIX: This forbids wrapping under any condition */
+  justify-content: space-between;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-/* The container for the logo and the navigation links */
 .logoAndNav {
   display: flex;
   align-items: center;
-  gap: 2.5rem; /* Space between logo and the nav links */
-  min-width: 0; /* Allows this container to shrink if needed on very small screens */
+  gap: 2.5rem;
 }
 
 .logo {
@@ -32,7 +29,6 @@
   text-decoration: none;
   font-size: 1.5rem;
   font-weight: bold;
-  flex-shrink: 0; /* Logo should not shrink */
 }
 
 .logo span {
@@ -41,8 +37,7 @@
 
 .navLinks {
   display: flex;
-  gap: 1.5rem; /* Space between each individual nav link */
-  white-space: nowrap; /* Ensure nav links don't wrap among themselves */
+  gap: 1.5rem;
 }
 
 .navLinks a {
@@ -56,8 +51,31 @@
   color: #FFFFFF;
 }
 
-/* The container for the search component */
 .searchWrapper {
   max-width: 250px;
-  /* Removed width: 100% which was contributing to the layout issue */
+}
+
+.hamburger {
+  display: none; /* Hidden by default */
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.desktopNav, .desktopSearch {
+  display: block; /* Visible by default */
+}
+
+
+/* --- Media Query for Mobile --- */
+@media (max-width: 1024px) { /* The breakpoint where the design changes */
+  .desktopNav, .desktopSearch {
+    display: none; /* Hide desktop nav and search on mobile */
+  }
+
+  .hamburger {
+    display: block; /* Show hamburger on mobile */
+  }
 }

@@ -1,0 +1,59 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 1000;
+}
+
+.menu {
+  background-color: #3B006A;
+  width: 80%;
+  max-width: 300px;
+  height: 100%;
+  padding: 2rem;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2.5rem;
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  cursor: pointer;
+}
+
+/* Target the navLinks container ONLY inside the mobile menu */
+.menu > [class*="navLinks"] {
+  display: flex;
+  flex-direction: column; /* The fix: stack links vertically */
+  gap: 1.5rem;            /* Space between links */
+  align-items: flex-start;  /* Align to the left */
+  margin-top: 5rem;         /* Push down from the close button */
+}
+
+/* Style the links for mobile */
+.menu > [class*="navLinks"] a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #E1BEE7;
+}
+
+.menu > [class*="navLinks"] a:hover {
+  color: #FFFFFF;
+}
+
+/* Push the search bar to the bottom */
+.menu > [class*="searchWrapper"] {
+  margin-top: auto;
+  width: 100%;
+}
