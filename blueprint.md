@@ -1,28 +1,36 @@
-# Application Blueprint
+# Project Blueprint: Bookworms of HSTU Blog
 
 ## Overview
 
-This is a comprehensive school management system that includes a public-facing website and a secure admin panel. The public website will feature pages for the school's mission, gallery, committee, magazines, and contact information. The admin panel will allow authorized users to manage the content of these pages.
+This is a Next.js application for the "Bookworms of HSTU" community. It serves as a blog platform where administrators can create, edit, and publish posts, and visitors can read them.
 
-## Implemented Features
+## Core Features
 
-### Design and Styling
-- **Global Styles**: A global stylesheet (`app/globals.css`) has been created to define a consistent color scheme, typography, and layout for the entire application.
-- **Modern Design**: The application uses a modern design aesthetic with a clean and intuitive user interface.
-- **Custom Components**: Reusable UI components have been created for navigation, headers, footers, and other common elements.
+- **Framework**: Next.js 14 with App Router
+- **Styling**: Next.js CSS Modules
+- **Database**: Cloud Firestore
+- **Authentication**: Firebase Authentication for the admin panel.
+- **Admin Panel**: A protected area (`/admin`) for managing blog posts (Create, Read, Update, Delete).
+- **Public-Facing Blog**: 
+  - A homepage that displays a list of recent blog posts.
+  - Individual blog post pages with dynamic routing based on a URL-friendly `slug`.
+- **Newsletter Signup**: A component for users to subscribe to a newsletter.
 
-### Load More Functionality
-- **Blog**: The blog page now features a "Load More" button that fetches and displays additional blog posts without a full page reload.
-- **Notices**: The notices page now includes a "Load More" button to load and display older notices and news items.
-- **Gallery**: The gallery has been enhanced with a "Load More" button to progressively load and display more image galleries.
-- **Library**: The library page now has a "Load More" button to fetch and display more books from the collection.
+## Design & Style
 
-### Newsletter Subscription
-- **Firestore Integration**: The newsletter subscription functionality has been refactored to use a secure `subscribers` collection in the Firestore database, replacing the previous file-based storage system. This ensures scalability, data integrity, and enhanced security for subscriber information.
+- **Homepage**: Features a prominent hero section with a title, subtitle, and a "Join Us" call-to-action button.
+- **Blog Post Page**: Displays a large header image, the post title, publication date, and the formatted content.
+- **Visuals**: The design uses a clean layout with modern typography and a consistent color scheme.
 
-## Bug Fixes
+## Current Plan: Fix Blog Post Linking
 
-### Duplicate Key Error
-- **Affected Pages:** Gallery, Library, Notices
-- **Problem:** A recurring "duplicate key" error was causing data-loading issues on several pages. This was due to React's Strict Mode in development, which caused the initial data to be fetched and rendered twice.
-- **Solution:** The data-fetching logic on the affected pages has been updated to be more resilient. The initial data load now **replaces** the existing content, while subsequent "Load More" clicks **append** new data. This prevents duplicate items from being rendered and resolves the error.
+**Goal**: Resolve the "Post not found" error by correcting how links to blog posts are generated.
+
+**Problem Analysis**: Diagnostic information revealed that links to posts were being created using the Firestore Document ID instead of the `slug` field. This caused the post page to query the database for the wrong identifier.
+
+**Steps**:
+
+1.  **[COMPLETED]** Create this `blueprint.md` file.
+2.  **[ACTIVE]** Add a "Recent Posts" section to the homepage (`app/page.js`) that fetches all posts from Firestore.
+3.  **[PENDING]** Ensure the links for each post in the new section use the `slug` field for the `href` attribute (e.g., `/blog/[slug]`).
+4.  **[PENDING]** Remove the diagnostic code from `app/blog/[slug]/page.js` and restore its original functionality.
