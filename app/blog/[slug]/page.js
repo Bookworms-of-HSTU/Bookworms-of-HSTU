@@ -1,17 +1,21 @@
 import Image from 'next/image';
-// Use the Firebase Admin SDK for server-side data fetching
 import { adminFirestore } from "@/lib/firebase/server";
 import styles from './page.module.css';
 
 async function getPost(slug) {
-  // Use the Admin SDK syntax to query the collection
+  const decodedSlug = decodeURIComponent(slug).toLowerCase();
   const postsRef = adminFirestore.collection('blogs');
-  const q = postsRef.where('slug', '==', slug);
-  const querySnapshot = await q.get();
+  const querySnapshot = await postsRef.get();
 
-  if (!querySnapshot.empty) {
-    const doc = querySnapshot.docs[0];
-    return { id: doc.id, ...doc.data() };
+  if (querySnapshot.empty) {
+    return null;
+  }
+
+  // Find the post by comparing the lowercase slug, making the match case-insensitive.
+  const postDoc = querySnapshot.docs.find(doc => doc.data().slug.toLowerCase() === decodedSlug);
+
+  if (postDoc) {
+    return { id: postDoc.id, ...postDoc.data() };
   } else {
     return null;
   }
