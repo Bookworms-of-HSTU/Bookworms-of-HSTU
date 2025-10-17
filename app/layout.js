@@ -17,13 +17,11 @@ const playfairDisplay = Playfair_Display({
   variable: '--font-playfair-display' 
 });
 
-// Use VERCEL_URL to create a dynamic base URL
-const siteUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3000';
+// CORRECTED: Use the canonical production URL for all metadata
+const siteUrl = 'https://bookworms-of-hstu.vercel.app';
 
 export const metadata = {
-  metadataBase: new URL(siteUrl), // Using the dynamic URL
+  metadataBase: new URL(siteUrl), // Using the canonical production URL
   title: {
     template: '%s | Bookworms of HSTU',
     default: 'Bookworms of HSTU - Official Website',
@@ -36,11 +34,11 @@ export const metadata = {
   openGraph: {
     title: 'Bookworms of HSTU - Official Website',
     description: 'The official website for the Bookworms of HSTU, a student book club at Hajee Mohammad Danesh Science and Technology University.',
-    url: siteUrl, // Using the dynamic URL
+    url: siteUrl, // Using the canonical production URL
     siteName: 'Bookworms of HSTU',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/og-image.jpg', // Relative to metadataBase
         width: 1200,
         height: 630,
       },
@@ -52,7 +50,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Bookworms of HSTU - Official Website',
     description: 'The official website for the Bookworms of HSTU, a student book club at Hajee Mohammad Danesh Science and Technology University.',
-    images: ['/og-image.jpg'],
+    images: ['/og-image.jpg'], // Relative to metadataBase
   },
 };
 
