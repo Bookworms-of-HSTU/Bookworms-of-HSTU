@@ -38,7 +38,7 @@ export default async function Home() {
       {/* --- DIAGNOSTIC SECTION --- */}
       <div style={{ padding: '2rem', background: '#f0f0f0', marginTop: '2rem' }}>
         <h2>Diagnostic Info: Blog Posts</h2>
-        <p>This section checks if the website can connect to and read from the 'blogs' database collection. The results will tell us why the "Post not found" error is occurring.</p>
+        <p>This section checks if the website can connect to and read from the &apos;blogs&apos; database collection. The results will tell us why the &quot;Post not found&quot; error is occurring.</p>
         {blogTitles && blogTitles.length > 0 ? (
           <ul>
             {blogTitles.map((title, index) => (
