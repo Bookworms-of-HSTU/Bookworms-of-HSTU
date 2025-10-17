@@ -1,14 +1,17 @@
 import Image from 'next/image';
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+// Switch to the admin SDK to bypass security rules for server-side rendering
+import { adminFirestore as db } from "@/lib/firebase/server";
 import styles from './page.module.css';
 
 async function getPost(slug) {
+  // This query now runs with admin privileges, bypassing security rules.
   const q = query(collection(db, "blogs"), where("slug", "==", slug));
   const querySnapshot = await getDocs(q);
 
   if (!querySnapshot.empty) {
     const doc = querySnapshot.docs[0];
+    // The data is already a plain object, no need for .data()
     return { id: doc.id, ...doc.data() };
   } else {
     return null;
