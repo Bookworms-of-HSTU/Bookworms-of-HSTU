@@ -5,6 +5,8 @@ import GoogleAnalytics from './components/Analytics'; // Renamed for clarity
 import { GA_TRACKING_ID } from './lib/gtag';
 import './globals.css';
 import ConditionalLayout from './components/ConditionalLayout';
+import { SpeedInsights } from '@vercel/speed-insights/next'; // Import Speed Insights
+
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({ 
@@ -82,6 +84,7 @@ export default function RootLayout({ children }) {
         <GoogleAnalytics /> 
         <ConditionalLayout>{children}</ConditionalLayout>
         <VercelAnalytics /> 
+        <SpeedInsights /> {/* Add Speed Insights component */}
       </body>
     </html>
   );
