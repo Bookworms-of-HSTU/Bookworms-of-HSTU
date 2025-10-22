@@ -72,3 +72,22 @@
 .teamMemberRole {
   color: #666;
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 1rem;
+  }
+
+  .title {
+    font-size: 2.5rem; /* Adjust font size for smaller screens */
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .missionSection, .teamSection {
+    padding: 0 1rem;
+  }
+}
