@@ -9,18 +9,18 @@
   width: 100%;
 }
 
-/* Styling for the Hits container (the dropdown with results) */
+/* Styling for the Hits container (the dropup with results) */
 .hitsContainer {
   position: absolute; /* Take the results out of the normal flow */
-  top: 100%; /* Position it right below the search bar */
+  bottom: 100%; /* Position it right ABOVE the search bar */
   left: 0;
   right: 0;
   background-color: white;
   border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15); /* Inverted shadow for drop-up */
   overflow: hidden;
   z-index: 100; /* Ensure it appears above other content */
-  margin-top: 8px; /* A little space between search bar and results */
+  margin-bottom: 8px; /* A little space between search bar and results */
 }
 
 /* A single result item */
