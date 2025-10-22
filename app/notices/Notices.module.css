@@ -27,6 +27,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   transition: transform 0.2s ease;
+  overflow: hidden; /* Prevent content from breaking out of the card */
 }
 
 .noticeCard:hover {
@@ -54,8 +55,9 @@
   font-size: 1rem;
   line-height: 1.6;
   color: #555;
-  word-wrap: break-word; /* Add this to break long words */
-  overflow-wrap: break-word; /* Modern property for the same behavior */
+  word-wrap: break-word;     /* Standard property for wrapping */
+  overflow-wrap: break-word; /* Modern standard property */
+  word-break: break-all;     /* More aggressive wrapping for long strings */
 }
 
 .loadMoreContainer {
