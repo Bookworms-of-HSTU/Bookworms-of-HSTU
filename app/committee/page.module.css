@@ -1,0 +1,78 @@
+/* Committee Page Container */
+.container {
+  width: 100%;
+  padding: 4rem 2rem;
+  background-color: #f9fafb; /* A light, clean background */
+}
+
+/* Page Header */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-family: var(--font-playfair-display), serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: #4b5563;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Grid for Committee Members */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Individual Member Card */
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Placeholder for the member's image */
+.cardImage {
+  height: 250px;
+  background-color: #e5e7eb; /* A neutral placeholder color */
+  background-image: url('https://source.unsplash.com/random/400x400/?portrait'); /* Placeholder from unsplash */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Content area of the card */
+.cardContent {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.memberName {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.memberPosition {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 500;
+}
