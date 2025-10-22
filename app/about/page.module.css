@@ -30,6 +30,13 @@
   max-width: 1200px;
   margin: 4rem auto;
   padding: 0 2rem;
+  overflow: hidden; /* Prevent content from breaking out of the section */
+}
+
+.missionSection p {
+  word-wrap: break-word;     /* Standard property for wrapping */
+  overflow-wrap: break-word; /* Modern standard property */
+  word-break: break-all;     /* More aggressive wrapping for long strings */
 }
 
 .sectionTitle {
