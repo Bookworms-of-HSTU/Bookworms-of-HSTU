@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import Carousel from '../components/Carousel';
+import MediaCarousel from '../components/MediaCarousel';
 import { collection, getDocs, query, orderBy, limit, startAfter } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
@@ -33,7 +33,18 @@ export default function Gallery() {
       }
 
       const eventsSnapshot = await getDocs(eventsQuery);
-      const newEvents = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const newEvents = eventsSnapshot.docs.map(doc => {
+        const data = doc.data();
+        // CORRECTED: Handle both `media` and legacy `images` fields.
+        const mediaData = data.media || data.images || [];
+        const media = mediaData.map(item => {
+          if (typeof item === 'string') {
+            return { type: 'image', src: item };
+          }
+          return item;
+        });
+        return { id: doc.id, ...data, media };
+      });
 
       if (newEvents.length < EVENTS_PER_PAGE) {
         setAllEventsLoaded(true);
@@ -55,11 +66,16 @@ export default function Gallery() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Gallery</h1>
-      {events.filter(event => event.id).map(event => (
+      {events.map(event => (
         <div key={event.id} className={styles.eventSection}>
           <h2 className={styles.eventTitle}>{event.title}</h2>
           <p className={styles.eventDate}>{event.date}</p>
-          <Carousel images={event.images} />
+          {/* Ensure media array is not empty before rendering carousel */}
+          {event.media && event.media.length > 0 ? (
+            <MediaCarousel media={event.media} />
+          ) : (
+            <p>No media available for this event.</p>
+          )}
         </div>
       ))}
       {!allEventsLoaded && (

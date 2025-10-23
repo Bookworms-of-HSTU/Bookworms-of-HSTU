@@ -1,81 +1,92 @@
 .carousel {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .imageContainer {
-    position: relative;
-    width: 100%;
-    max-width: 800px;
-    overflow: hidden;
-    border-radius: 10px;
-    border: 1px solid #eaeaea;
-  }
-  
-  .image {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  .navButton {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: white;
-    color: #333;
-    border: 1px solid #eaeaea;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 1;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
+  position: relative;
+  max-width: 800px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 8px; /* Added for softer edges */
+}
 
-  .navButton:hover {
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .prevButton {
-    left: 10px;
-  }
-  
-  .nextButton {
-    right: 10px;
-  }
-  
-  .dots {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-  }
-  
-  .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.3);
-    margin: 0 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
+.mediaContainer {
+  width: 100%;
+}
 
-  .dot:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .activeDot {
-    background-color: #333;
-  }
-  
+/* This container creates a responsive box with a 16:9 aspect ratio */
+.imageContainer, .videoContainer {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  background-color: #f0f0f0; /* Placeholder color */
+}
+
+/* The image itself will fill the container */
+.image {
+  object-fit: cover; /* Replaces the old objectFit prop */
+}
+
+/* The video element in a direct-link scenario */
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.navButton:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.prevButton {
+  left: 16px;
+}
+
+.nextButton {
+  right: 16px;
+}
+
+.dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.activeDot {
+  background-color: white;
+}

@@ -1,22 +1,17 @@
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 2rem;
 }
 
 .title {
-  font-size: 3rem;
-  text-align: center;
-  margin-bottom: 3rem;
+  font-size: 2rem;
+  margin-bottom: 2rem;
 }
 
 .addEventForm {
-  margin-bottom: 3rem;
-}
-
-.addEventForm h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 .formGroup {
@@ -28,56 +23,79 @@
   margin-bottom: 0.5rem;
 }
 
-.formGroup input {
+.formGroup input[type=\"text\"],
+.formGroup input[type=\"date\"] {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 3px;
+}
+
+.imageInputContainer, .mediaInputContainer {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.mediaInputContainer select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.mediaInputContainer input {
+  flex-grow: 1; /* Make the input field take up available space */
+}
+
+.addButton,
+.deleteButton,
+.submitButton,
+.editButton,
+.cancelButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.addButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: white;
 }
 
 .submitButton {
-  background-color: #0070f3;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  background-color: #007bff;
+  color: white;
 }
 
-.eventList h2 {
-  font-size: 1.5rem;
+.eventList {
+  margin-top: 2rem;
+}
+
+.eventItem {
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 5px;
   margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table th,
-.table td {
-  border: 1px solid #ccc;
-  padding: 0.5rem;
-  text-align: left;
-}
-
-.editButton,
-.deleteButton {
-  margin-right: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.actions {
+  display: flex;
+  gap: 10px;
 }
 
 .editButton {
-  background-color: #f0ad4e;
-  color: #fff;
-}
-
-.deleteButton {
-  background-color: #d9534f;
-  color: #fff;
+  background-color: #ffc107;
+  color: black;
 }
 
 .modal {
@@ -93,17 +111,15 @@
 }
 
 .modalContent {
-  background-color: #fff;
+  background-color: white;
   padding: 2rem;
   border-radius: 5px;
+  width: 80%;
+  max-width: 600px;
 }
 
 .cancelButton {
-  background-color: #ccc;
-  color: #000;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 1rem;
+  background-color: #6c757d;
+  color: white;
+  margin-left: 10px;
 }
