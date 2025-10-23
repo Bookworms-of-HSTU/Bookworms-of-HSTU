@@ -83,6 +83,10 @@ export default async function About() {
           </div>
         </div>
       ))}
+
+      <p className={styles.developerCredit}>
+        This website is developed by Golam Kuadir Khan Prince
+      </p>
     </div>
   );
 }
