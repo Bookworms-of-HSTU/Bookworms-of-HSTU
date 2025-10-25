@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import styles from './Carousel.module.css';
 import YouTubePlayer from './YouTubePlayer';
-import ImageModal from './ImageModal'; // Import the new modal component
 
 function getYouTubeId(url) {
   const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -18,7 +17,6 @@ function isImgurUrl(url) {
 
 export default function MediaCarousel({ media }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [modalImage, setModalImage] = useState(null); // State for the modal
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? media.length - 1 : prevIndex - 1));
@@ -30,14 +28,6 @@ export default function MediaCarousel({ media }) {
 
   const goToIndex = (index) => {
     setCurrentIndex(index);
-  };
-
-  const openModal = (src) => {
-    setModalImage(src);
-  };
-
-  const closeModal = () => {
-    setModalImage(null);
   };
 
   if (!media || media.length === 0) {
@@ -55,72 +45,62 @@ export default function MediaCarousel({ media }) {
   const imageSource = isImgurImage ? getImgurImageUrl(currentMedia.src) : currentMedia.src;
 
   return (
-    <>
-      <div className={styles.carousel}>
-        <button onClick={goToPrevious} className={`${styles.navButton} ${styles.prevButton}`}>
-          &lt;
-        </button>
+    <div className={styles.carousel}>
+      <button onClick={goToPrevious} className={`${styles.navButton} ${styles.prevButton}`}>
+        &lt;
+      </button>
 
-        <div className={styles.mediaContainer}>
-          {currentMedia.type === 'image' ? (
-            <div className={styles.imageContainer} onClick={() => openModal(imageSource)}>
-              {isImgurImage ? (
-                <img 
-                  key={currentMedia.src} 
-                  src={imageSource} 
-                  alt="Gallery image from Imgur" 
-                  className={styles.image} // Re-using the same class with object-fit: contain
-                />
-              ) : (
-                <Image 
-                  key={currentMedia.src} 
-                  src={imageSource}
-                  alt="Gallery image" 
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className={styles.image}
-                  priority={currentIndex === 0}
-                />
-              )}
-            </div>
-          ) : videoId ? (
-            <YouTubePlayer videoId={videoId} />
-          ) : (
-            <div className={styles.videoContainer}>
-              <video 
+      <div className={styles.mediaContainer}>
+        {currentMedia.type === 'image' ? (
+          <div className={styles.imageContainer}>
+            {isImgurImage ? (
+              <img 
                 key={currentMedia.src} 
-                controls 
-                className={styles.video}
-              >
-                <source src={currentMedia.src} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          )}
-
-          <div className={styles.dots}>
-            {media.map((_, index) => (
-              <span
-                key={index}
-                className={`${styles.dot} ${currentIndex === index ? styles.activeDot : ''}`}
-                onClick={() => goToIndex(index)}
-              ></span>
-            ))}
+                src={imageSource} 
+                alt="Gallery image from Imgur" 
+                className={styles.image}
+              />
+            ) : (
+              <Image 
+                key={currentMedia.src} 
+                src={imageSource}
+                alt="Gallery image" 
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className={styles.image}
+                priority={currentIndex === 0}
+              />
+            )}
           </div>
-        </div>
+        ) : videoId ? (
+          <YouTubePlayer videoId={videoId} />
+        ) : (
+          <div className={styles.videoContainer}>
+            <video 
+              key={currentMedia.src} 
+              controls 
+              className={styles.video}
+            >
+              <source src={currentMedia.src} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        )}
 
-        <button onClick={goToNext} className={`${styles.navButton} ${styles.nextButton}`}>
-          &gt;
-        </button>
+        <div className={styles.dots}>
+          {media.map((_, index) => (
+            <span
+              key={index}
+              className={`${styles.dot} ${currentIndex === index ? styles.activeDot : ''}`}
+              onClick={() => goToIndex(index)}
+            ></span>
+          ))}
+        </div>
       </div>
 
-      {modalImage && (
-        <ImageModal 
-          src={modalImage}
-          alt="Enlarged gallery image"
-          onClose={closeModal} 
-        />
-      )}
-    </>
+      <button onClick={goToNext} className={`${styles.navButton} ${styles.nextButton}`}>
+        &gt;
+      </button>
+    </div>
   );
 }

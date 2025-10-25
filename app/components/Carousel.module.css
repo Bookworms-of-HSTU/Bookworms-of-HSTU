@@ -1,3 +1,4 @@
+
 .carousel {
   position: relative;
   max-width: 800px;
@@ -19,9 +20,18 @@
   cursor: zoom-in; /* Indicate that the image is clickable */
 }
 
-/* The image itself will be contained within the box, not stretched */
+/*
+ The image itself will be contained within the box, not stretched.
+ Absolutely positioning it ensures it fills the container correctly,
+ matching the behavior of Next.js's <Image fill> component.
+*/
 .image {
   object-fit: contain; /* Changed from cover to contain */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 /* The video element in a direct-link scenario */
