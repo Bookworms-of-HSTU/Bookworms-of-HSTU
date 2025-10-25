@@ -66,13 +66,13 @@ export default function Gallery() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Gallery</h1>
-      {events.map(event => (
+      {events.map((event, index) => (
         <div key={event.id} className={styles.eventSection}>
           <h2 className={styles.eventTitle}>{event.title}</h2>
           <p className={styles.eventDate}>{event.date}</p>
           {/* Ensure media array is not empty before rendering carousel */}
           {event.media && event.media.length > 0 ? (
-            <MediaCarousel media={event.media} />
+            <MediaCarousel media={event.media} priority={index === 0} />
           ) : (
             <p>No media available for this event.</p>
           )}

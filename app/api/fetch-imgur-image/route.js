@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 import { load } from 'cheerio';
@@ -23,8 +22,8 @@ export async function GET(request) {
     const imageUrl = $('meta[property="og:image"]').attr('content');
 
     if (imageUrl) {
-      // Redirect the client to the actual image URL
-      return NextResponse.redirect(imageUrl);
+      // Return the direct image URL as JSON
+      return NextResponse.json({ imageUrl });
     } else {
       return NextResponse.json({ error: 'Could not find an og:image at the provided Imgur URL.' }, { status: 404 });
     }
