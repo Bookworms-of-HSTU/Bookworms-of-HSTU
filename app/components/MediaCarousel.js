@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import styles from './Carousel.module.css';
 import YouTubePlayer from './YouTubePlayer';
@@ -17,6 +17,7 @@ function isImgurUrl(url) {
 
 export default function MediaCarousel({ media }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [imgurImageUrl, setImgurImageUrl] = useState('');
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? media.length - 1 : prevIndex - 1));
@@ -30,19 +31,25 @@ export default function MediaCarousel({ media }) {
     setCurrentIndex(index);
   };
 
+  const currentMedia = media[currentIndex];
+  const isImgurImage = currentMedia.type === 'image' && isImgurUrl(currentMedia.src);
+
+  useEffect(() => {
+    if (isImgurImage) {
+      fetch(`/api/fetch-imgur-image?url=${encodeURIComponent(currentMedia.src)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setImgurImageUrl(data.imageUrl);
+        });
+    }
+  }, [currentIndex, isImgurImage, currentMedia.src]);
+
   if (!media || media.length === 0) {
     return <p>No media to display.</p>;
   }
-
-  const currentMedia = media[currentIndex];
-  const videoId = currentMedia.type === 'video' ? getYouTubeId(currentMedia.src) : null;
-  const isImgurImage = currentMedia.type === 'image' && isImgurUrl(currentMedia.src);
-
-  const getImgurImageUrl = (src) => {
-    return `/api/fetch-imgur-image?url=${encodeURIComponent(src)}`;
-  };
   
-  const imageSource = isImgurImage ? getImgurImageUrl(currentMedia.src) : currentMedia.src;
+  const videoId = currentMedia.type === 'video' ? getYouTubeId(currentMedia.src) : null;
+  const imageSource = isImgurImage ? imgurImageUrl : currentMedia.src;
 
   return (
     <div className={styles.carousel}>
@@ -53,23 +60,18 @@ export default function MediaCarousel({ media }) {
       <div className={styles.mediaContainer}>
         {currentMedia.type === 'image' ? (
           <div className={styles.imageContainer}>
-            {isImgurImage ? (
-              <img 
-                key={currentMedia.src} 
-                src={imageSource} 
-                alt="Gallery image from Imgur" 
-                className={styles.image}
-              />
-            ) : (
-              <Image 
-                key={currentMedia.src} 
-                src={imageSource}
-                alt="Gallery image" 
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className={styles.image}
-                priority={currentIndex === 0}
-              />
+            {imageSource && (
+               <a href={imageSource} target="_blank" rel="noopener noreferrer">
+                <Image 
+                  key={imageSource} 
+                  src={imageSource}
+                  alt="Gallery image" 
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className={styles.image}
+                  priority={currentIndex === 0}
+                />
+              </a>
             )}
           </div>
         ) : videoId ? (
