@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import styles from './page.module.css';
-import MediaCarousel from '../components/MediaCarousel';
 import { collection, getDocs, query, orderBy, limit, startAfter } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import dynamic from 'next/dynamic';
+
+const MediaCarousel = dynamic(() => import('../components/MediaCarousel'), { ssr: false });
 
 const EVENTS_PER_PAGE = 10;
 
