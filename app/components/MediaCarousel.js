@@ -15,7 +15,7 @@ function isImgurUrl(url) {
   return url.includes('imgur.com');
 }
 
-export default function MediaCarousel({ media }) {
+export default function MediaCarousel({ media, priority = false }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imgurImageUrl, setImgurImageUrl] = useState('');
 
@@ -61,7 +61,7 @@ export default function MediaCarousel({ media }) {
         {currentMedia.type === 'image' ? (
           <div className={styles.imageContainer}>
             {imageSource && (
-               <a href={imageSource} target="_blank" rel="noopener noreferrer">
+              <a href={imageSource} target="_blank" rel="noopener noreferrer" className={styles.fillLink}>
                 <Image 
                   key={imageSource} 
                   src={imageSource}
@@ -69,7 +69,7 @@ export default function MediaCarousel({ media }) {
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className={styles.image}
-                  priority={currentIndex === 0}
+                  priority={priority}
                 />
               </a>
             )}
