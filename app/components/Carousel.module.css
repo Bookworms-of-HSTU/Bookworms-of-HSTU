@@ -16,11 +16,12 @@
   width: 100%;
   padding-top: 56.25%; /* 16:9 aspect ratio */
   background-color: #f0f0f0; /* Placeholder color */
+  cursor: zoom-in; /* Indicate that the image is clickable */
 }
 
-/* The image itself will fill the container */
+/* The image itself will be contained within the box, not stretched */
 .image {
-  object-fit: cover; /* Replaces the old objectFit prop */
+  object-fit: contain; /* Changed from cover to contain */
 }
 
 /* The video element in a direct-link scenario */

@@ -1,0 +1,53 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  cursor: zoom-out;
+}
+
+.modalContent {
+  position: relative;
+  max-width: 95vw;
+  max-height: 95vh;
+  overflow: hidden; /* Hide parts of the image that are outside this container */
+  border-radius: 8px;
+  cursor: grab; /* Initial cursor for panning */
+}
+
+.zoomableImage {
+  display: block;
+  max-width: none; /* Allow image to be larger than its container */
+  max-height: none;
+  transition: transform 0.1s ease-out; /* Smooth out the panning slightly */
+  user-select: none; /* Prevent text selection while dragging */
+  -webkit-user-drag: none; /* Prevent browser default image drag */
+}
+
+.closeButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 28px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 1010;
+  transition: background-color 0.2s ease;
+}
+
+.closeButton:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
