@@ -21,6 +21,7 @@ const playfairDisplay = Playfair_Display({
 const siteUrl = 'https://bookworms-of-hstu.vercel.app';
 
 export const metadata = {
+  manifest: '/manifest.json',
   metadataBase: new URL(siteUrl), // Using the canonical production URL
   title: {
     template: '%s | Bookworms of HSTU',
