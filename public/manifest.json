@@ -9,7 +9,7 @@
   "icons": [
     {
       "src": "/logo.png",
-      "sizes": "500x500",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
@@ -19,6 +19,13 @@
       "sizes": "1200x630",
       "type": "image/jpeg",
       "form_factor": "wide",
+      "label": "Bookworms of HSTU Homepage"
+    },
+    {
+      "src": "/og-image.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
       "label": "Bookworms of HSTU Homepage"
     }
   ]
