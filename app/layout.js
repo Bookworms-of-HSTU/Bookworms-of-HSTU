@@ -5,6 +5,7 @@ import GoogleAnalytics from './components/Analytics'; // Renamed for clarity
 import { GA_TRACKING_ID } from './lib/gtag';
 import './globals.css';
 import ConditionalLayout from './components/ConditionalLayout';
+import ServiceWorkerRegistration from './components/ServiceWorkerRegistration';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({ 
@@ -78,6 +79,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <ServiceWorkerRegistration />
         <GoogleAnalytics /> 
         <ConditionalLayout>{children}</ConditionalLayout>
         <VercelAnalytics /> 
