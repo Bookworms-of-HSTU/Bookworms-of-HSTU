@@ -23,7 +23,9 @@
     "react-firebase-hooks": "^5.1.1",
     "react-instantsearch": "^7.17.0",
     "react-instantsearch-nextjs": "^1.0.2",
+    "react-markdown": "^10.1.0",
     "react-slick": "^0.31.0",
+    "remark-gfm": "^4.0.1",
     "slick-carousel": "^1.8.1",
     "yet-another-react-lightbox": "^3.25.0"
   },

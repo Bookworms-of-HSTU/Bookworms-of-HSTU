@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import { adminFirestore } from "@/lib/firebase/server";
 import styles from './page.module.css';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 async function getPost(slug) {
     const postsRef = adminFirestore.collection('blogs');
-    // The issue was never here. It was in the linking. 
-    // We query by slug, which is the correct field.
     const querySnapshot = await postsRef.where('slug', '==', slug).limit(1).get();
 
     if (querySnapshot.empty) {
@@ -40,10 +40,9 @@ export default async function Post({ params }) {
       <div className={styles.container}>
         <h1 className={styles.title}>{post.title}</h1>
         <div className={styles.date}>{post.date}</div>
-        <div
-          className={styles.content}
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
+        <div className={styles.content}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+        </div>
       </div>
     </div>
   );
