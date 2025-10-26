@@ -2,8 +2,10 @@
   "name": "Bookworms of HSTU",
   "short_name": "BookwormsHSTU",
   "description": "A passionate community of readers and writers at Hajee Mohammad Danesh Science and Technology University.",
+  "id": "/",
   "start_url": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay"],
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "icons": [

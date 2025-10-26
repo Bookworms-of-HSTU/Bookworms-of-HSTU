@@ -31,3 +31,13 @@ a {
 * {
   box-sizing: border-box;
 }
+
+/* Add padding for the Window Controls Overlay when the app is installed */
+@media (display-mode: window-controls-overlay) {
+  :root {
+    /* Use safe area inset to determine the height of the title bar */
+    --titlebar-area-height: env(titlebar-area-height, 30px);
+    /* Add padding to the top of the root element */
+    padding-top: var(--titlebar-area-height);
+  }
+}

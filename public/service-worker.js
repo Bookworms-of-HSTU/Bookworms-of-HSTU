@@ -1,14 +1,15 @@
-const CACHE_NAME = 'bookworms-of-hstu-cache-v1';
+const CACHE_NAME = 'bookworms-of-hstu-cache-v2'; // Updated cache version
 const urlsToCache = [
   '/',
   '/manifest.json',
   '/logo500x500.png',
-  '/globals.css',
-  '/app/page.module.css',
-  '/app/Home.module.css'
+  '/globals.css'
+  // The CSS module files were removed as they are not public.
+  // They will be cached dynamically by the 'fetch' event listener below.
 ];
 
 self.addEventListener('install', event => {
+  // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -25,6 +26,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log('Deleting old cache:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -37,19 +39,29 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
+        // Cache hit - return response
         if (response) {
           return response;
         }
+
         return fetch(event.request).then(
           response => {
+            // Check if we received a valid response
             if(!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
+
+            // IMPORTANT: Clone the response. A response is a stream
+            // and because we want the browser to consume the response
+            // as well as the cache consuming the response, we need
+            // to clone it so we have two streams.
             const responseToCache = response.clone();
+
             caches.open(CACHE_NAME)
               .then(cache => {
                 cache.put(event.request, responseToCache);
               });
+
             return response;
           }
         );
