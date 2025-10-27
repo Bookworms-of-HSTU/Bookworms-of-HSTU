@@ -53,7 +53,13 @@ export default function MediaCarousel({ media, priority = false }) {
 
   return (
     <div className={styles.carousel}>
-      <button onClick={goToPrevious} className={`${styles.navButton} ${styles.prevButton}`}>
+      <button 
+        onClick={goToPrevious} 
+        className={`${styles.navButton} ${styles.prevButton} ga-trackable`}
+        data-ga-action="click_carousel_nav"
+        data-ga-category="Gallery Carousel"
+        data-ga-label="Previous"
+      >
         &lt;
       </button>
 
@@ -61,7 +67,7 @@ export default function MediaCarousel({ media, priority = false }) {
         {currentMedia.type === 'image' ? (
           <div className={styles.imageContainer}>
             {imageSource && (
-              <a href={imageSource} target="_blank" rel="noopener noreferrer" className={styles.fillLink}>
+              <a href={imageSource} target="_blank" rel="noopener noreferrer" className={`${styles.fillLink} ga-trackable`}>
                 <Image 
                   key={imageSource} 
                   src={imageSource}
@@ -70,6 +76,9 @@ export default function MediaCarousel({ media, priority = false }) {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className={styles.image}
                   priority={priority}
+                  data-ga-action="click_carousel_image"
+                  data-ga-category="Gallery Carousel"
+                  data-ga-label={imageSource}
                 />
               </a>
             )}
@@ -93,14 +102,23 @@ export default function MediaCarousel({ media, priority = false }) {
           {media.map((_, index) => (
             <span
               key={index}
-              className={`${styles.dot} ${currentIndex === index ? styles.activeDot : ''}`}
+              className={`${styles.dot} ${currentIndex === index ? styles.activeDot : ''} ga-trackable`}
               onClick={() => goToIndex(index)}
+              data-ga-action="click_carousel_dot"
+              data-ga-category="Gallery Carousel"
+              data-ga-label={`Dot ${index + 1}`}
             ></span>
           ))}
         </div>
       </div>
 
-      <button onClick={goToNext} className={`${styles.navButton} ${styles.nextButton}`}>
+      <button 
+        onClick={goToNext} 
+        className={`${styles.navButton} ${styles.nextButton} ga-trackable`}
+        data-ga-action="click_carousel_nav"
+        data-ga-category="Gallery Carousel"
+        data-ga-label="Next"
+      >
         &gt;
       </button>
     </div>

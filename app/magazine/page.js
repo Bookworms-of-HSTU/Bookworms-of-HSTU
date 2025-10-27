@@ -5,6 +5,11 @@ import styles from './page.module.css';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
+export const metadata = {
+  title: 'Magazines | Bookworms of HSTU',
+  description: 'Read and download the official magazines published by the Bookworms of HSTU. Explore our creative works, articles, and more.',
+};
+
 export default function MagazinePage() {
   const [magazines, setMagazines] = useState([]);
   const [selectedMagazine, setSelectedMagazine] = useState(null);
@@ -21,7 +26,7 @@ export default function MagazinePage() {
     };
 
     fetchMagazines();
-  }, [magazines]);
+  }, []);
 
   const handleMagazineChange = (e) => {
     const magazineId = e.target.value;
@@ -39,10 +44,12 @@ export default function MagazinePage() {
         <h1 className={styles.title}>Our Magazines</h1>
         <div className={styles.controls}>
           <select 
-            className={styles.dropdown}
+            className={`${styles.dropdown} ga-trackable`}
             onChange={handleMagazineChange} 
             value={selectedMagazine ? selectedMagazine.id : ''}
-            data-analytics-id="magazine-dropdown"
+            data-ga-action="select_magazine"
+            data-ga-category="Magazine"
+            data-ga-label="Magazine Dropdown"
           >
             {magazines.map(magazine => (
               <option key={magazine.id} value={magazine.id}>
@@ -55,8 +62,10 @@ export default function MagazinePage() {
               href={selectedMagazine.pdf} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className={styles.downloadButton}
-              data-analytics-id={`magazine-download-${selectedMagazine.id}`}
+              className={`${styles.downloadButton} ga-trackable`}
+              data-ga-action="download_magazine"
+              data-ga-category="Magazine"
+              data-ga-label={selectedMagazine.title}
             >
               Download
             </a>

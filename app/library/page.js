@@ -5,6 +5,11 @@ import styles from './page.module.css';
 import { collection, getDocs, query, limit, startAfter } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
+export const metadata = {
+  title: 'Library | Bookworms of HSTU',
+  description: 'Explore the digital and physical collection of books available in the Bookworms of HSTU library. View PDF versions of available books.',
+};
+
 const BOOKS_PER_PAGE = 10;
 
 const BookCard = ({ book }) => {
@@ -17,7 +22,15 @@ const BookCard = ({ book }) => {
         {!book.hasHardcopy && !book.hasSoftcopy && <p className={styles.availability}>Unavailable</p>}
       </div>
       {book.hasSoftcopy && book.pdfLink && (
-        <a href={book.pdfLink} target="_blank" rel="noopener noreferrer" className={styles.pdfLink}>
+        <a 
+          href={book.pdfLink} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className={`${styles.pdfLink} ga-trackable`}
+          data-ga-action="click_view_pdf"
+          data-ga-category="Library"
+          data-ga-label={book.title}
+        >
           View PDF
         </a>
       )}
@@ -77,7 +90,14 @@ export default function Library() {
       </div>
       {!allBooksLoaded && (
         <div className={styles.loadMoreContainer}>
-          <button onClick={() => fetchBooks(lastVisible)} disabled={loading} className={styles.loadMoreButton}>
+          <button 
+            onClick={() => fetchBooks(lastVisible)} 
+            disabled={loading} 
+            className={`${styles.loadMoreButton} ga-trackable`}
+            data-ga-action="load_more_library"
+            data-ga-category="Library"
+            data-ga-label="Load More"
+          >
             {loading ? 'Loading...' : 'Load More'}
           </button>
         </div>

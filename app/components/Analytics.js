@@ -15,6 +15,20 @@ export default function Analytics() {
 
   useEffect(() => {
     const handleClick = (e) => {
+      // New logic for ga-trackable elements
+      const trackableElement = e.target.closest('.ga-trackable');
+      if (trackableElement) {
+        const action = trackableElement.getAttribute('data-ga-action');
+        const category = trackableElement.getAttribute('data-ga-category');
+        const label = trackableElement.getAttribute('data-ga-label');
+        
+        if (action && category && label) {
+          event({ action, category, label });
+          return; // Event handled, no need to proceed
+        }
+      }
+
+      // Original logic for data-analytics-id
       let element = e.target;
       while (element) {
         const analyticsId = element.getAttribute('data-analytics-id');

@@ -8,6 +8,11 @@ import dynamic from 'next/dynamic';
 
 const MediaCarousel = dynamic(() => import('../components/MediaCarousel'), { ssr: false });
 
+export const metadata = {
+  title: 'Gallery | Bookworms of HSTU',
+  description: 'Browse through photos and videos from past events, meetings, and activities of the Bookworms of HSTU.',
+};
+
 const EVENTS_PER_PAGE = 10;
 
 export default function Gallery() {
@@ -82,7 +87,14 @@ export default function Gallery() {
       ))}
       {!allEventsLoaded && (
         <div className={styles.loadMoreContainer}>
-          <button onClick={() => fetchEvents(lastVisible)} disabled={loading} className={styles.loadMoreButton}>
+          <button 
+            onClick={() => fetchEvents(lastVisible)} 
+            disabled={loading} 
+            className={`${styles.loadMoreButton} ga-trackable`}
+            data-ga-action="load_more_gallery"
+            data-ga-category="Gallery"
+            data-ga-label="Load More"
+          >
             {loading ? 'Loading...' : 'Load More'}
           </button>
         </div>

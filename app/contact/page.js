@@ -4,6 +4,11 @@ import { useState } from 'react';
 import styles from './page.module.css';
 import { addContactMessage } from '../lib/actions';
 
+export const metadata = {
+  title: 'Contact Us | Bookworms of HSTU',
+  description: 'Get in touch with the Bookworms of HSTU. Send us a message, ask a question, or provide feedback through our contact form.',
+};
+
 export default function Contact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -49,7 +54,15 @@ export default function Contact() {
             <label htmlFor="message">Message</label>
             <textarea id="message" name="message" rows="5" required value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
           </div>
-          <button type="submit" className={styles.submitButton}>Send Message</button>
+          <button 
+            type="submit" 
+            className={`${styles.submitButton} ga-trackable`}
+            data-ga-action="submit_contact_form"
+            data-ga-category="Contact"
+            data-ga-label="Send Message"
+          >
+            Send Message
+          </button>
         </form>
       )}
     </div>

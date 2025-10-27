@@ -5,6 +5,11 @@ import { collection, getDocs, query, orderBy, limit, startAfter } from "firebase
 import { db } from "@/lib/firebase";
 import styles from './Notices.module.css';
 
+export const metadata = {
+  title: 'Notices & News | Bookworms of HSTU',
+  description: 'Stay up-to-date with the latest news, announcements, and notices from the Bookworms of HSTU.',
+};
+
 const NOTICES_PER_PAGE = 10;
 
 export default function NoticesPage() {
@@ -68,7 +73,14 @@ export default function NoticesPage() {
         </div>
         {!allNoticesLoaded && (
           <div className={styles.loadMoreContainer}>
-            <button onClick={() => fetchNotices(lastVisible)} disabled={loading} className={styles.loadMoreButton}>
+            <button 
+              onClick={() => fetchNotices(lastVisible)} 
+              disabled={loading} 
+              className={`${styles.loadMoreButton} ga-trackable`}
+              data-ga-action="load_more_notices"
+              data-ga-category="Notices"
+              data-ga-label="Load More"
+            >
               {loading ? 'Loading...' : 'Load More'}
             </button>
           </div>
