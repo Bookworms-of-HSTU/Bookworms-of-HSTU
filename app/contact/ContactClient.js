@@ -52,9 +52,9 @@ export default function ContactClient() {
           <button 
             type="submit" 
             className={`${styles.submitButton} ga-trackable`}
-            data-ga-action="submit_contact_form"
-            data-ga-category="Contact"
-            data-ga-label="Send Message"
+            data-ga-category="Contact Page"
+            data-ga-action="Click"
+            data-ga-label="Send Message Button"
           >
             Send Message
           </button>

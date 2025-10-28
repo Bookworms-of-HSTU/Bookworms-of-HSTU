@@ -86,9 +86,9 @@ export default function GalleryClient() {
             onClick={() => fetchEvents(lastVisible)} 
             disabled={loading} 
             className={`${styles.loadMoreButton} ga-trackable`}
-            data-ga-action="load_more_gallery"
-            data-ga-category="Gallery"
-            data-ga-label="Load More"
+            data-ga-category="Gallery Page"
+            data-ga-action="Click"
+            data-ga-label="Load More Button"
           >
             {loading ? 'Loading...' : 'Load More'}
           </button>

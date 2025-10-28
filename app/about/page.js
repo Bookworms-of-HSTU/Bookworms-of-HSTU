@@ -4,8 +4,9 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 export const metadata = {
-  title: 'About Us',
+  title: 'About Us | Bookworms of HSTU',
   description: 'Learn about the mission, vision, and the dedicated team behind the Bookworms of HSTU, the official book club of Hajee Mohammad Danesh Science and Technology University.',
+  keywords: 'Bookworms of HSTU, about us, HSTU book club, literary society, committee, team',
 };
 
 async function getCommittees() {
@@ -84,7 +85,7 @@ export default async function About() {
         </div>
       ))}
 
-      <p className={styles.developerCredit}>
+      <p className={`${styles.developerCredit} ga-trackable`}>
         This website is developed by Golam Kuadir Khan Prince
       </p>
     </div>
