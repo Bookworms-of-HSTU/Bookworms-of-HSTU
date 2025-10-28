@@ -1,19 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
+import { collection, addDoc, doc, deleteDoc, updateDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import styles from './NoticeManager.module.css'; // Updated to use the new CSS module
+import styles from './NoticeManager.module.css';
 
-// A robust function to format dates, handling both server Timestamps and client-side dates.
-// This will permanently fix the "Date N/A" bug.
-const formatDate = (date) => {
-  if (!date) return 'N/A';
-  // Convert Firestore Timestamp to JavaScript Date object
-  const d = date instanceof Timestamp ? date.toDate() : new Date(date);
-  // Check if the date is valid
+// Simplified and corrected date formatting function.
+// It now correctly handles the ISO date string passed from the server.
+const formatDate = (dateString) => {
+  if (!dateString) return 'N/A';
+  const d = new Date(dateString);
   if (isNaN(d.getTime())) return 'N/A';
-  // Format to a readable string, e.g., "October 26, 2023"
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 };
 
@@ -21,11 +18,9 @@ export default function NoticeManager({ notices: initialNotices }) {
   const [notices, setNotices] = useState(initialNotices);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  // State for the new date picker. Defaults to today's date.
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [editingNotice, setEditingNotice] = useState(null);
 
-  // Effect to sync state when the initial server-provided notices change.
   useEffect(() => {
     setNotices(initialNotices);
   }, [initialNotices]);
@@ -33,7 +28,7 @@ export default function NoticeManager({ notices: initialNotices }) {
   const resetForm = () => {
     setTitle('');
     setContent('');
-    setDate(new Date().toISOString().split('T')[0]); // Reset date to today
+    setDate(new Date().toISOString().split('T')[0]);
     setEditingNotice(null);
   };
 
@@ -41,8 +36,8 @@ export default function NoticeManager({ notices: initialNotices }) {
     setEditingNotice(notice);
     setTitle(notice.title);
     setContent(notice.content);
-    // Ensure the date is correctly formatted for the date input
-    const d = notice.date instanceof Timestamp ? notice.date.toDate() : new Date(notice.date);
+    // Correctly handle the ISO string for the date input.
+    const d = new Date(notice.date);
     setDate(d.toISOString().split('T')[0]);
   };
 
@@ -60,22 +55,27 @@ export default function NoticeManager({ notices: initialNotices }) {
       return;
     }
 
+    // The date from the input is already in 'YYYY-MM-DD' string format.
+    // We convert it to a Date object for Firestore.
     const noticeData = {
       title,
       content,
-      date: new Date(date), // Convert the date string back to a Date object for Firestore
+      date: new Date(date),
     };
 
     if (editingNotice) {
-      // Update existing notice
       const noticeRef = doc(db, 'notices', editingNotice.id);
       await updateDoc(noticeRef, noticeData);
-      setNotices(notices.map(n => n.id === editingNotice.id ? { ...editingNotice, ...noticeData } : n));
+      // We must refetch or manually update the client-side data with the server-confirmed format.
+      // For simplicity here, we'll optimisticly update with an ISO string.
+      const updatedNotice = { ...editingNotice, ...noticeData, date: noticeData.date.toISOString() };
+      setNotices(notices.map(n => n.id === editingNotice.id ? updatedNotice : n));
       alert('Notice updated successfully!');
     } else {
-      // Add new notice
       const docRef = await addDoc(collection(db, 'notices'), { ...noticeData, createdAt: serverTimestamp() });
-      setNotices([{ id: docRef.id, ...noticeData }, ...notices]);
+      // Optimistically update UI. The date object needs to be an ISO string for consistency.
+      const newNotice = { id: docRef.id, ...noticeData, date: noticeData.date.toISOString() };
+      setNotices([newNotice, ...notices]);
       alert('Notice added successfully!');
     }
 
@@ -86,7 +86,6 @@ export default function NoticeManager({ notices: initialNotices }) {
     <div className={styles.container}>
       <h1 className={styles.title}>Manage Notices</h1>
 
-      {/* A clean, modern form in its own card for a premium feel */}
       <div className={styles.formContainer}>
         <form onSubmit={handleSubmit} className={styles.form}>
           <input
@@ -104,7 +103,6 @@ export default function NoticeManager({ notices: initialNotices }) {
             className={styles.textarea}
             required
           ></textarea>
-          {/* The new date picker, ensuring dates are always handled correctly */}
           <input
             type="date"
             value={date}
@@ -123,7 +121,6 @@ export default function NoticeManager({ notices: initialNotices }) {
         </form>
       </div>
 
-      {/* Notices displayed in a clean, modern card grid */}
       <ul className={styles.noticeList}>
         {notices.map(notice => (
           <li key={notice.id} className={styles.noticeItem}>
@@ -132,7 +129,6 @@ export default function NoticeManager({ notices: initialNotices }) {
               <p>{notice.content}</p>
             </div>
             <div className={styles.noticeMeta}>
-              {/* The permanently fixed date display */}
               <span>Date: {formatDate(notice.date)}</span>
             </div>
             <div className={styles.itemButtonGroup}>
