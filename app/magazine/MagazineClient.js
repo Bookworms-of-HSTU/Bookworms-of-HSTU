@@ -42,8 +42,8 @@ export default function MagazineClient() {
             className={`${styles.dropdown} ga-trackable`}
             onChange={handleMagazineChange} 
             value={selectedMagazine ? selectedMagazine.id : ''}
-            data-ga-action="select_magazine"
-            data-ga-category="Magazine"
+            data-ga-category="Magazine Page"
+            data-ga-action="Select"
             data-ga-label="Magazine Dropdown"
           >
             {magazines.map(magazine => (
@@ -58,9 +58,9 @@ export default function MagazineClient() {
               target="_blank" 
               rel="noopener noreferrer" 
               className={`${styles.downloadButton} ga-trackable`}
-              data-ga-action="download_magazine"
-              data-ga-category="Magazine"
-              data-ga-label={selectedMagazine.title}
+              data-ga-category="Magazine Page"
+              data-ga-action="Click"
+              data-ga-label={`${selectedMagazine.title} Download Button`}
             >
               Download
             </a>

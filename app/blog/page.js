@@ -31,9 +31,9 @@ export default async function Blog() {
             href={`/blog/${post.slug}`} 
             key={post.slug} 
             className={`${styles.card} ga-trackable`}
-            data-ga-action="click_blog_post"
-            data-ga-category="Blog"
-            data-ga-label={post.title}
+            data-ga-category="Blog Page"
+            data-ga-action="Click"
+            data-ga-label={`Blog Post: ${post.title}`}
           >
             <Image src={post.image} alt={post.title} className={styles.cardImage} width={400} height={200} />
             <div className={styles.cardContent}>
