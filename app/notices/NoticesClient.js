@@ -1,55 +1,32 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { collection, getDocs, query, orderBy, limit, startAfter } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './Notices.module.css';
 
-const NOTICES_PER_PAGE = 10;
+const formatDate = (dateString) => {
+  if (!dateString) return 'N/A';
+  const d = new Date(dateString);
+  if (isNaN(d.getTime())) return 'N/A';
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+};
 
-export default function NoticesClient() {
-  const [notices, setNotices] = useState([]);
-  const [lastVisible, setLastVisible] = useState(null);
+export default function NoticesClient({ initialNotices, initialLastVisible }) {
+  const [notices, setNotices] = useState(initialNotices);
+  const [lastVisible, setLastVisible] = useState(initialLastVisible);
   const [loading, setLoading] = useState(false);
-  const [allNoticesLoaded, setAllNoticesLoaded] = useState(false);
+  const [allNoticesLoaded, setAllNoticesLoaded] = useState(initialNotices.length < 10);
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const fetchNotices = async (after = null) => {
+  const fetchMoreNotices = async () => {
+    if (!lastVisible) return;
     setLoading(true);
-    try {
-      let noticesQuery = query(
-        collection(db, "notices"),
-        orderBy("date", "desc"),
-        limit(NOTICES_PER_PAGE)
-      );
-
-      if (after) {
-        noticesQuery = query(
-          collection(db, "notices"),
-          orderBy("date", "desc"),
-          startAfter(after),
-          limit(NOTICES_PER_PAGE)
-        );
-      }
-
-      const noticeSnapshot = await getDocs(noticesQuery);
-      const newNotices = noticeSnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-
-      if (newNotices.length < NOTICES_PER_PAGE) {
-        setAllNoticesLoaded(true);
-      }
-
-      setNotices(prevNotices => (after ? [...prevNotices, ...newNotices] : newNotices));
-      setLastVisible(noticeSnapshot.docs[noticeSnapshot.docs.length - 1]);
-    } catch (error) {
-      console.error("Error fetching notices: ", error);
-    } finally {
-      setLoading(false);
-    }
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set('lastVisible', lastVisible);
+    router.push(`/notices?${newSearchParams.toString()}`, { scroll: false });
+    // The page will re-render with new notices passed as props.
   };
-
-  useEffect(() => {
-    fetchNotices();
-  }, []);
 
   return (
     <div className={styles.noticesPage}>
@@ -60,7 +37,7 @@ export default function NoticesClient() {
             <div key={notice.id} className={styles.noticeCard}>
               <div className={styles.noticeContent}>
                 <h2 className={styles.noticeTitle}>{notice.title}</h2>
-                <p className={styles.noticeDate}>{new Date(notice.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <p className={styles.noticeDate}>{formatDate(notice.date)}</p>
                 <p className={styles.noticeText}>{notice.content}</p>
               </div>
             </div>
@@ -69,7 +46,7 @@ export default function NoticesClient() {
         {!allNoticesLoaded && (
           <div className={styles.loadMoreContainer}>
             <button 
-              onClick={() => fetchNotices(lastVisible)} 
+              onClick={fetchMoreNotices} 
               disabled={loading} 
               className={`${styles.loadMoreButton} ga-trackable`}
               data-ga-action="load_more_notices"
