@@ -1,113 +1,142 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { collection, addDoc, doc, deleteDoc, updateDoc, Timestamp, orderBy, query, getDocs } from 'firebase/firestore';
+import { collection, getDocs, addDoc, doc, deleteDoc, updateDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import styles from './NoticeManager.module.css';
+import styles from './NoticeManager.module.css'; // Updated to use the new CSS module
 
-// This component is now refactored to correctly handle props from its parent server component.
+// A robust function to format dates, handling both server Timestamps and client-side dates.
+// This will permanently fix the "Date N/A" bug.
+const formatDate = (date) => {
+  if (!date) return 'N/A';
+  // Convert Firestore Timestamp to JavaScript Date object
+  const d = date instanceof Timestamp ? date.toDate() : new Date(date);
+  // Check if the date is valid
+  if (isNaN(d.getTime())) return 'N/A';
+  // Format to a readable string, e.g., "October 26, 2023"
+  return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+};
+
 export default function NoticeManager({ notices: initialNotices }) {
-  // The component's state is initialized with the notices passed from the server.
   const [notices, setNotices] = useState(initialNotices);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [editingId, setEditingId] = useState(null);
+  // State for the new date picker. Defaults to today's date.
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
+  const [editingNotice, setEditingNotice] = useState(null);
 
-  // This useEffect hook ensures that if the server sends updated props (e.g., on page refresh),
-  // the component's internal state is updated to match. This is the key to fixing the stale data issue.
+  // Effect to sync state when the initial server-provided notices change.
   useEffect(() => {
     setNotices(initialNotices);
   }, [initialNotices]);
 
-  // This function is called after any change (add, edit, delete) to get the latest data.
-  const refreshNotices = async () => {
-    const noticesCollection = collection(db, "notices");
-    const q = query(noticesCollection, orderBy('date', 'desc'));
-    const noticeSnapshot = await getDocs(q);
-    const updatedNotices = noticeSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setNotices(updatedNotices);
-  }
+  const resetForm = () => {
+    setTitle('');
+    setContent('');
+    setDate(new Date().toISOString().split('T')[0]); // Reset date to today
+    setEditingNotice(null);
+  };
+
+  const handleEditClick = (notice) => {
+    setEditingNotice(notice);
+    setTitle(notice.title);
+    setContent(notice.content);
+    // Ensure the date is correctly formatted for the date input
+    const d = notice.date instanceof Timestamp ? notice.date.toDate() : new Date(notice.date);
+    setDate(d.toISOString().split('T')[0]);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this notice?')) {
+      await deleteDoc(doc(db, 'notices', id));
+      setNotices(notices.filter(notice => notice.id !== id));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!title || !content || !date) {
+      alert('Please fill out all fields.');
+      return;
+    }
 
     const noticeData = {
       title,
       content,
-      date: Timestamp.now(),
+      date: new Date(date), // Convert the date string back to a Date object for Firestore
     };
 
-    if (editingId) {
+    if (editingNotice) {
       // Update existing notice
-      const noticeDoc = doc(db, "notices", editingId);
-      await updateDoc(noticeDoc, noticeData);
+      const noticeRef = doc(db, 'notices', editingNotice.id);
+      await updateDoc(noticeRef, noticeData);
+      setNotices(notices.map(n => n.id === editingNotice.id ? { ...editingNotice, ...noticeData } : n));
+      alert('Notice updated successfully!');
     } else {
       // Add new notice
-      await addDoc(collection(db, "notices"), noticeData);
+      const docRef = await addDoc(collection(db, 'notices'), { ...noticeData, createdAt: serverTimestamp() });
+      setNotices([{ id: docRef.id, ...noticeData }, ...notices]);
+      alert('Notice added successfully!');
     }
 
-    // Reset form and editing state
-    setTitle('');
-    setContent('');
-    setEditingId(null);
-
-    // Refresh the list from the database to show the change immediately
-    await refreshNotices();
+    resetForm();
   };
-
-  const handleEdit = (notice) => {
-    setEditingId(notice.id);
-    setTitle(notice.title);
-    setContent(notice.content);
-  };
-
-  const handleDelete = async (id) => {
-    const noticeDoc = doc(db, "notices", id);
-    await deleteDoc(noticeDoc);
-    // Refresh the list from the database after deleting
-    await refreshNotices();
-  };
-
-  const handleCancelEdit = () => {
-    setEditingId(null);
-    setTitle('');
-    setContent('');
-  }
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>{editingId ? 'Edit Notice' : 'Add New Notice'}</h1>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-          required
-          className={styles.input}
-        />
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="Content"
-          required
-          className={styles.textarea}
-        />
-        <div className={styles.buttonGroup}>
-          <button type="submit" className={styles.submitButton}>{editingId ? 'Update' : 'Add'}</button>
-          {editingId && <button type="button" onClick={handleCancelEdit} className={styles.cancelButton}>Cancel</button>}
-        </div>
-      </form>
+      <h1 className={styles.title}>Manage Notices</h1>
 
-      <h2 className={styles.title}>Existing Notices</h2>
+      {/* A clean, modern form in its own card for a premium feel */}
+      <div className={styles.formContainer}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <input
+            type="text"
+            placeholder="Notice Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className={styles.input}
+            required
+          />
+          <textarea
+            placeholder="Notice Content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className={styles.textarea}
+            required
+          ></textarea>
+          {/* The new date picker, ensuring dates are always handled correctly */}
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className={styles.dateInput}
+            required
+          />
+          <div className={styles.buttonGroup}>
+            {editingNotice && (
+              <button type="button" onClick={resetForm} className={styles.cancelButton}>Cancel Edit</button>
+            )}
+            <button type="submit" className={styles.submitButton}>
+              {editingNotice ? 'Update Notice' : 'Add Notice'}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Notices displayed in a clean, modern card grid */}
       <ul className={styles.noticeList}>
-        {notices.map((notice) => (
+        {notices.map(notice => (
           <li key={notice.id} className={styles.noticeItem}>
-            <h3>{notice.title}</h3>
-            <p>{notice.content}</p>
-            <small>Date: {notice.date?.toDate?.().toLocaleDateString() || 'N/A'}</small>
+            <div className={styles.noticeContent}>
+              <h3>{notice.title}</h3>
+              <p>{notice.content}</p>
+            </div>
+            <div className={styles.noticeMeta}>
+              {/* The permanently fixed date display */}
+              <span>Date: {formatDate(notice.date)}</span>
+            </div>
             <div className={styles.itemButtonGroup}>
-              <button onClick={() => handleEdit(notice)} className={styles.editButton}>Edit</button>
+              <button onClick={() => handleEditClick(notice)} className={styles.editButton}>Edit</button>
               <button onClick={() => handleDelete(notice.id)} className={styles.deleteButton}>Delete</button>
             </div>
           </li>
