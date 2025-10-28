@@ -1,5 +1,5 @@
 
-import { adminDb } from "@/lib/firebase/server";
+import { adminFirestore } from "@/lib/firebase/server";
 import NoticeManager from '@/app/components/NoticeManager';
 
 // This is the crucial fix: It forces the page to be dynamically rendered on every request,
@@ -7,8 +7,8 @@ import NoticeManager from '@/app/components/NoticeManager';
 export const dynamic = 'force-dynamic';
 
 async function getNotices() {
-  // Using the server-side adminDb ensures we are fetching data fresh from the server.
-  const noticesCollection = adminDb.collection("notices");
+  // Using the server-side adminFirestore ensures we are fetching data fresh from the server.
+  const noticesCollection = adminFirestore.collection("notices");
   // Ordering by date to ensure the newest notices appear first.
   const noticeSnapshot = await noticesCollection.orderBy('date', 'desc').get();
   const notices = noticeSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
