@@ -1,153 +1,118 @@
-
 'use client';
 
-import { useState } from 'react';
-import { collection, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { useState, useEffect } from 'react';
+import { collection, addDoc, doc, deleteDoc, updateDoc, Timestamp, orderBy, query, getDocs } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 import styles from './NoticeManager.module.css';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
+// This component is now refactored to correctly handle props from its parent server component.
 export default function NoticeManager({ notices: initialNotices }) {
+  // The component's state is initialized with the notices passed from the server.
   const [notices, setNotices] = useState(initialNotices);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditing, setIsEditing] = useState(null);
-  const [newNotice, setNewNotice] = useState({ title: '', content: '', date: '' });
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [editingId, setEditingId] = useState(null);
 
-  const handleAddClick = () => {
-    setIsEditing(null);
-    setNewNotice({ title: '', content: '', date: new Date().toISOString().split('T')[0] });
-    setIsModalOpen(true);
-  };
+  // This useEffect hook ensures that if the server sends updated props (e.g., on page refresh),
+  // the component's internal state is updated to match. This is the key to fixing the stale data issue.
+  useEffect(() => {
+    setNotices(initialNotices);
+  }, [initialNotices]);
 
-  const handleEditClick = (notice) => {
-    setIsEditing(notice.id);
-    setNewNotice({ title: notice.title, content: notice.content, date: notice.date });
-    setIsModalOpen(true);
-  };
+  // This function is called after any change (add, edit, delete) to get the latest data.
+  const refreshNotices = async () => {
+    const noticesCollection = collection(db, "notices");
+    const q = query(noticesCollection, orderBy('date', 'desc'));
+    const noticeSnapshot = await getDocs(q);
+    const updatedNotices = noticeSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setNotices(updatedNotices);
+  }
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setIsEditing(null);
-    setNewNotice({ title: '', content: '', date: '' });
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleSave = async () => {
-    if (isEditing) {
-      const noticeRef = doc(db, "notices", isEditing);
-      await updateDoc(noticeRef, newNotice);
-      setNotices(notices.map(notice => (notice.id === isEditing ? { ...newNotice, id: isEditing } : notice)));
+    const noticeData = {
+      title,
+      content,
+      date: Timestamp.now(),
+    };
+
+    if (editingId) {
+      // Update existing notice
+      const noticeDoc = doc(db, "notices", editingId);
+      await updateDoc(noticeDoc, noticeData);
     } else {
-      const docRef = await addDoc(collection(db, "notices"), newNotice);
-      setNotices([...notices, { ...newNotice, id: docRef.id }]);
+      // Add new notice
+      await addDoc(collection(db, "notices"), noticeData);
     }
-    handleCancel();
+
+    // Reset form and editing state
+    setTitle('');
+    setContent('');
+    setEditingId(null);
+
+    // Refresh the list from the database to show the change immediately
+    await refreshNotices();
   };
 
-  const handleDelete = async (noticeId) => {
-    await deleteDoc(doc(db, "notices", noticeId));
-    setNotices(notices.filter(notice => notice.id !== noticeId));
+  const handleEdit = (notice) => {
+    setEditingId(notice.id);
+    setTitle(notice.title);
+    setContent(notice.content);
   };
 
-  const sliderSettings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+  const handleDelete = async (id) => {
+    const noticeDoc = doc(db, "notices", id);
+    await deleteDoc(noticeDoc);
+    // Refresh the list from the database after deleting
+    await refreshNotices();
   };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setTitle('');
+    setContent('');
+  }
 
   return (
-    <div className={styles.managerContainer}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Manage Notices</h1>
-        <button onClick={handleAddClick} className={styles.addButton}>
-          Add Notice
-        </button>
-      </div>
-
-      <div className={styles.sliderContainer}>
-        <Slider {...sliderSettings}>
-          {notices.map(notice => (
-            <div key={notice.id} className={styles.noticeCard}>
-              <div className={styles.noticeContent}>
-                <h2 className={styles.noticeTitle}>{notice.title}</h2>
-                <p className={styles.noticeText}>{notice.content}</p>
-              </div>
-              <div className={styles.cardFooter}>
-                <p className={styles.noticeDate}>{notice.date}</p>
-                <div className={styles.actions}>
-                  <button onClick={() => handleEditClick(notice)} className={styles.editButton}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                      <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                      <path fillRule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                  <button onClick={() => handleDelete(notice.id)} className={styles.deleteButton}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </Slider>
-      </div>
-
-      {isModalOpen && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modal}>
-            <h2 className={styles.modalTitle}>{isEditing ? 'Edit Notice' : 'Add New Notice'}</h2>
-            <div className={styles.inputGroup}>
-              <input
-                type="text"
-                placeholder="Title"
-                value={newNotice.title}
-                onChange={(e) => setNewNotice({ ...newNotice, title: e.target.value })}
-                className={styles.input}
-              />
-              <textarea
-                placeholder="Content"
-                value={newNotice.content}
-                onChange={(e) => setNewNotice({ ...newNotice, content: e.target.value })}
-                className={styles.textarea}
-                rows="4"
-              />
-              <input
-                type="date"
-                placeholder="Date"
-                value={newNotice.date}
-                onChange={(e) => setNewNotice({ ...newNotice, date: e.target.value })}
-                className={styles.input}
-              />
-            </div>
-            <div className={styles.modalActions}>
-              <button onClick={handleCancel} className={styles.cancelButton}>Cancel</button>
-              <button onClick={handleSave} className={styles.saveButton}>Save</button>
-            </div>
-          </div>
+    <div className={styles.container}>
+      <h1 className={styles.title}>{editingId ? 'Edit Notice' : 'Add New Notice'}</h1>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title"
+          required
+          className={styles.input}
+        />
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Content"
+          required
+          className={styles.textarea}
+        />
+        <div className={styles.buttonGroup}>
+          <button type="submit" className={styles.submitButton}>{editingId ? 'Update' : 'Add'}</button>
+          {editingId && <button type="button" onClick={handleCancelEdit} className={styles.cancelButton}>Cancel</button>}
         </div>
-      )}
+      </form>
+
+      <h2 className={styles.title}>Existing Notices</h2>
+      <ul className={styles.noticeList}>
+        {notices.map((notice) => (
+          <li key={notice.id} className={styles.noticeItem}>
+            <h3>{notice.title}</h3>
+            <p>{notice.content}</p>
+            <small>Date: {notice.date?.toDate?.().toLocaleDateString() || 'N/A'}</small>
+            <div className={styles.itemButtonGroup}>
+              <button onClick={() => handleEdit(notice)} className={styles.editButton}>Edit</button>
+              <button onClick={() => handleDelete(notice.id)} className={styles.deleteButton}>Delete</button>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
