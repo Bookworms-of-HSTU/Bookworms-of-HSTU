@@ -11,7 +11,20 @@ async function getNotices() {
   const noticesCollection = adminFirestore.collection("notices");
   // Ordering by date to ensure the newest notices appear first.
   const noticeSnapshot = await noticesCollection.orderBy('date', 'desc').get();
-  const notices = noticeSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  
+  // This is the critical fix. We manually destructure the data and convert the 
+  // Firestore Timestamp to a serializable ISO string before passing it to the client component.
+  // This resolves the "Only plain objects can be passed to Client Components" error.
+  const notices = noticeSnapshot.docs.map(doc => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      title: data.title,
+      content: data.content,
+      date: data.date.toDate().toISOString(), // Convert Timestamp to ISO string
+    };
+  });
+
   return notices;
 }
 
