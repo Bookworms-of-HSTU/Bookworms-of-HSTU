@@ -8,7 +8,8 @@ const URL = process.env.VERCEL_URL
 
 export default async function sitemap() {
   // 1. Get static routes
-  const routes = ['', '/about', '/contact', '/gallery', '/events'].map((route) => ({
+    // I've updated this list to include all valid pages and removed non-existent ones.
+  const routes = ['', '/about', '/contact', '/gallery', '/library', '/magazine', '/notices', '/blog'].map((route) => ({
     url: `${URL}${route}`,
     lastModified: new Date().toISOString().split('T')[0],
   }));
